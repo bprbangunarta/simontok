@@ -197,11 +197,11 @@
 
                                         <p></p>
                                         <strong>Pelaksanaan</strong> <br>
-                                        {{ $item->pelaksanaan }} <br> {{ $item->ket_pelaksanaan }}
+                                        {{ $item->pelaksanaan }}
 
                                         <p></p>
                                         <strong>Hasil {{ $item->jenis }}</strong> <br>
-                                        {{ $item->hasil }} <br> {{ $item->ket_hasil }}
+                                        {{ $item->hasil }}
 
                                         <p></p>
                                         <strong>Catatan Leader</strong> <br>

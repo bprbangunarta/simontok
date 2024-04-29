@@ -77,12 +77,13 @@
                                         <i class="ti ti-file-text ti-sm"></i>
                                     </span>
                                 </a>
-
+                                @can('Telebilling Create')
                                 <a href="{{ $item->whatsapp }}" target="_blank">
                                     <span class="badge badge-center bg-success w-px-30 h-px-30">
                                         <i class="ti ti-brand-whatsapp ti-sm"></i>
                                     </span>
                                 </a>
+                                @endcan
                             </td>
                         </tr>
                         @empty

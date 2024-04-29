@@ -105,7 +105,7 @@
                     <tbody>
                         @forelse ($kredit->agunan as $index => $item)
                         <tr>
-                            <td class="text-center" width="5%">{{ $index + 1 }}</td>
+                            <td class="text-center" width="5%" style="vertical-align: middle;">{{ $index + 1 }}</td>
                             <td>{{ $item->agunan }}</td>
                         </tr>
                         @empty
