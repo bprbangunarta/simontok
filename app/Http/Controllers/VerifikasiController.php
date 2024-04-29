@@ -87,10 +87,12 @@ class VerifikasiController extends Controller
 
     public function update(Request $request, $notugas)
     {
-        if ($request->catatan_leader && is_null($request->karakter_debitur)) {
+        if ($request->catatan_leader) {
             $tugas = Tugas::where('notugas', $notugas)->first();
             $tugas->catatan_leader = $request->catatan_leader;
             $tugas->save();
+
+            return redirect()->back()->with('success', 'Tugas berhasil diperbarui');
         } else {
             try {
                 $client = new Client();

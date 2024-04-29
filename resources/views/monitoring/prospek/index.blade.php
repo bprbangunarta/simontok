@@ -50,9 +50,17 @@
                         <tr>
                             <td>{{ $item->longDate }}</td>
                             <td>{{ $item->nohp }}</td>
-                            <td>{{ $item->calon_debitur }}</td>
-                            <td>{{ $item->jenis }}</td>
-                            <td>{{ $item->petugas->name }}</td>
+                            <td class="text-uppercase">{{ $item->calon_debitur }}</td>
+                            <td>
+                                <a href="{{ route('prospek.index') }}?search={{ $item->jenis }}" class="text-primary">
+                                    {{ $item->jenis }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ route('prospek.index') }}?search={{ $item->petugas->name }}" class="text-primary">
+                                    {{ $item->petugas->name }}
+                                </a>
+                            </td>
                             <td>
                                 <span class="badge badge bg-label-{{ $item->statusColor }}">{{ $item->status }}</span>
                             </td>
