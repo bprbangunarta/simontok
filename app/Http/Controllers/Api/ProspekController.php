@@ -35,13 +35,13 @@ class ProspekController extends Controller
     {
         $request->validate([
             'id'                => 'required',
-            'foto_pelaksanaan'  => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto_pelaksanaan'  => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ], [
             'id.required'               => 'ID tidak boleh kosong',
             'foto_pelaksanaan.required' => 'Foto tidak boleh kosong',
             'foto_pelaksanaan.image'    => 'Foto harus berupa gambar',
             'foto_pelaksanaan.mimes'    => 'Foto harus berformat jpeg, png, jpg, gif, atau svg',
-            'foto_pelaksanaan.max'      => 'Ukuran foto maksimal 2MB',
+            'foto_pelaksanaan.max'      => 'Ukuran foto maksimal 5MB',
         ]);
 
         $id = $request->id;
