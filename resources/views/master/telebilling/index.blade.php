@@ -72,7 +72,7 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('telebilling.show', $item->nokredit) }}">
+                                <a href="{{ route('telebilling.show', $item->nokredit) }}" target="_blank">
                                     <span class="badge badge-center bg-warning w-px-30 h-px-30">
                                         <i class="ti ti-file-text ti-sm"></i>
                                     </span>
