@@ -41,7 +41,7 @@ class TugasController extends Controller
 
         $fileName = $notugas . '.' . $file->getClientOriginalExtension();
 
-        $file->storeAs('uploads/tugas', $fileName);
+        $file->storeAs('app/public/uploads/tugas', $fileName);
 
         $tugas = Tugas::where('notugas', $notugas)->first();
 
