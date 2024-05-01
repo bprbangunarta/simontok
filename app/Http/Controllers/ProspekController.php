@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProspekController extends Controller
 {
@@ -120,7 +121,9 @@ class ProspekController extends Controller
         $prospek->load('petugas');
 
         if (is_null($prospek->foto_pelaksanaan)) {
-            $prospek->foto_pelaksanaan = "default.png";
+            $prospek->foto_pelaksanaan = Storage::url('uploads/prospek/' . 'default.png');
+        } else {
+            $prospek->foto_pelaksanaan = Storage::url('uploads/prospek/' . $prospek->foto_pelaksanaan);
         }
 
         $jenis = [
