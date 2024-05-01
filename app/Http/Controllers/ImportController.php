@@ -19,15 +19,13 @@ class ImportController extends Controller
         ]);
 
         $file = $request->file('file');
-
         $fileName = date('Y_m_d') . " " . 'USER.' . $file->getClientOriginalExtension();
         $file->move('import/users', $fileName);
 
-        Excel::import(new UsersImport, public_path('import/users/' . $fileName));
+        Excel::import(new UsersImport, public_path('/import/users/' . $fileName));
 
-        return redirect()->back()->with('success', 'User berhasil diimport');
+        return redirect()->route('user.index')->with('success', 'User berhasil diimport');
     }
-
 
     public function kredit(Request $request)
     {
@@ -66,13 +64,12 @@ class ImportController extends Controller
         ]);
 
         $file = $request->file('file');
-
-        $fileName = date('Y_m_d') . " " . 'WRITEOFF.' . $file->getClientOriginalExtension();
+        $fileName = now() . " " . 'WRITEOFF.' . $file->getClientOriginalExtension();
         $file->move('import/writeoff', $fileName);
 
-        Excel::import(new WriteoffImport, public_path('import/writeoff/' . $fileName));
+        Excel::import(new WriteoffImport, public_path('/import/writeoff/' . $fileName));
 
-        return redirect()->back()->with('success', 'User Writeoff diimport');
+        return redirect()->route('writeoff.index')->with('success', 'Writeoff berhasil diimport');
     }
 
     public function agunan(Request $request)
