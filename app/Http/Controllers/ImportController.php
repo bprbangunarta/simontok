@@ -49,12 +49,26 @@ class ImportController extends Controller
         ]);
 
         $file = $request->file('file');
-        $fileName = date('Y_m_d') . " " . 'KREDIT.' . $file->getClientOriginalExtension();
-        $file->move('import/kredit', $fileName);
 
-        Excel::import(new KreditImport, public_path('/import/kredit/' . $fileName));
+        // membuat nama file unik
+        $nama_file = $file->hashName();
 
-        return redirect()->route('kredit.index')->with('success', 'Kredit berhasil diimport');
+        //temporary file
+        $path = $file->storeAs('public/excel/', $nama_file);
+
+        // import data
+        $import = Excel::import(new KreditImport(), storage_path('app/public/excel/' . $nama_file));
+
+        //remove from server
+        Storage::delete($path);
+
+        if ($import) {
+            //redirect
+            return redirect()->route('kredit.index')->with(['success' => 'Kredit Berhasil Diimport!']);
+        } else {
+            //redirect
+            return redirect()->route('kredit.index')->with(['error' => 'Kredit Gagal Diimport!']);
+        }
     }
 
     public function tunggakan(Request $request)
@@ -64,12 +78,26 @@ class ImportController extends Controller
         ]);
 
         $file = $request->file('file');
-        $fileName = date('Y_m_d') . " " . 'TUNGGAKAN.' . $file->getClientOriginalExtension();
-        $file->move('import/tunggakan', $fileName);
 
-        Excel::import(new TunggakanImport, public_path('/import/tunggakan/' . $fileName));
+        // membuat nama file unik
+        $nama_file = $file->hashName();
 
-        return redirect()->route('kredit.index')->with('success', 'Tunggakan berhasil diimport');
+        //temporary file
+        $path = $file->storeAs('public/excel/', $nama_file);
+
+        // import data
+        $import = Excel::import(new TunggakanImport(), storage_path('app/public/excel/' . $nama_file));
+
+        //remove from server
+        Storage::delete($path);
+
+        if ($import) {
+            //redirect
+            return redirect()->route('kredit.index')->with(['success' => 'Tunggakan Berhasil Diimport!']);
+        } else {
+            //redirect
+            return redirect()->route('kredit.index')->with(['error' => 'Tunggakan Gagal Diimport!']);
+        }
     }
 
     public function writeoff(Request $request)
@@ -108,11 +136,25 @@ class ImportController extends Controller
         ]);
 
         $file = $request->file('file');
-        $fileName = date('Y_m_d') . " " . 'AGUNAN.' . $file->getClientOriginalExtension();
-        $file->move('import/agunan', $fileName);
 
-        Excel::import(new AgunanImport, public_path('/import/agunan/' . $fileName));
+        // membuat nama file unik
+        $nama_file = $file->hashName();
 
-        return redirect()->route('agunan.index')->with('success', 'Agunan berhasil diimport');
+        //temporary file
+        $path = $file->storeAs('public/excel/', $nama_file);
+
+        // import data
+        $import = Excel::import(new AgunanImport(), storage_path('app/public/excel/' . $nama_file));
+
+        //remove from server
+        Storage::delete($path);
+
+        if ($import) {
+            //redirect
+            return redirect()->route('agunan.index')->with(['success' => 'Agunan Berhasil Diimport!']);
+        } else {
+            //redirect
+            return redirect()->route('agunan.index')->with(['error' => 'Agunan Gagal Diimport!']);
+        }
     }
 }
