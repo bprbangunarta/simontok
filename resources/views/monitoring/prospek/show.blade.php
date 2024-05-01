@@ -23,11 +23,11 @@
 
                                 @if ($prospek->aksesForm == 'disabled')
                                 <div class="mb-0">
-                                    <img class="img-fluid rounded-3" src="/images/prospek/{{ $prospek->foto_pelaksanaan }}">
+                                    <img class="img-fluid rounded-3" src="{{ url($prospek->foto_pelaksanaan) }}">
                                 </div>
                                 @else
                                 <div class="mb-3">
-                                    <img class="img-fluid rounded-3" src="/images/prospek/{{ $prospek->foto_pelaksanaan }}">
+                                    <img class="img-fluid rounded-3" src="{{ url($prospek->foto_pelaksanaan) }}">
                                 </div>
 
                                 <div class="mb-3">
