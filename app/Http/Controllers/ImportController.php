@@ -20,21 +20,6 @@ class ImportController extends Controller
         ]);
 
         $file = $request->file('file');
-        $fileName = date('Y_m_d') . " " . 'USER.' . $file->getClientOriginalExtension();
-        $file->move('import/users', $fileName);
-
-        Excel::import(new UsersImport, public_path('/import/users/' . $fileName));
-
-        return redirect()->route('user.index')->with('success', 'User berhasil diimport');
-    }
-
-    public function import(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:csv,xls,xlsx'
-        ]);
-
-        $file = $request->file('file');
 
         // membuat nama file unik
         $nama_file = $file->hashName();
@@ -50,10 +35,10 @@ class ImportController extends Controller
 
         if ($import) {
             //redirect
-            return redirect()->route('users.index')->with(['success' => 'Data Berhasil Diimport!']);
+            return redirect()->route('user.index')->with(['success' => 'User Berhasil Diimport!']);
         } else {
             //redirect
-            return redirect()->route('users.index')->with(['error' => 'Data Gagal Diimport!']);
+            return redirect()->route('user.index')->with(['error' => 'User Gagal Diimport!']);
         }
     }
 
@@ -87,6 +72,21 @@ class ImportController extends Controller
         return redirect()->route('kredit.index')->with('success', 'Tunggakan berhasil diimport');
     }
 
+    // public function writeoff(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => 'required|mimes:csv,xls,xlsx'
+    //     ]);
+
+    //     $file = $request->file('file');
+    //     $fileName = now() . " " . 'WRITEOFF.' . $file->getClientOriginalExtension();
+    //     $file->move('import/writeoff', $fileName);
+
+    //     Excel::import(new WriteoffImport, public_path('/import/writeoff/' . $fileName));
+
+    //     return redirect()->route('writeoff.index')->with('success', 'Writeoff berhasil diimport');
+    // }
+
     public function writeoff(Request $request)
     {
         $request->validate([
@@ -94,12 +94,26 @@ class ImportController extends Controller
         ]);
 
         $file = $request->file('file');
-        $fileName = now() . " " . 'WRITEOFF.' . $file->getClientOriginalExtension();
-        $file->move('import/writeoff', $fileName);
 
-        Excel::import(new WriteoffImport, public_path('/import/writeoff/' . $fileName));
+        // membuat nama file unik
+        $nama_file = $file->hashName();
 
-        return redirect()->route('writeoff.index')->with('success', 'Writeoff berhasil diimport');
+        //temporary file
+        $path = $file->storeAs('public/excel/', $nama_file);
+
+        // import data
+        $import = Excel::import(new WriteoffImport(), storage_path('app/public/excel/' . $nama_file));
+
+        //remove from server
+        Storage::delete($path);
+
+        if ($import) {
+            //redirect
+            return redirect()->route('writeoff.index')->with(['success' => 'Writeoff Berhasil Diimport!']);
+        } else {
+            //redirect
+            return redirect()->route('writeoff.index')->with(['error' => 'Writeoff Gagal Diimport!']);
+        }
     }
 
     public function agunan(Request $request)
