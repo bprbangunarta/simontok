@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TugasController extends Controller
 {
@@ -150,9 +151,13 @@ class TugasController extends Controller
             $tugas->nama_debitur = $tugas->kredit->nama_debitur;
         }
 
-
         $tugas->tanggal = Carbon::parse($tugas->tanggal)->locale('id')->isoFormat('dddd, D MMMM Y');
         $tugas->foto_pelaksanaan = $tugas->foto_pelaksanaan ?? 'default.png';
+        if (is_null($tugas->foto_pelaksanaan)) {
+            $tugas->foto_pelaksanaan = Storage::url('uploads/tugas/' . 'default.png');
+        } else {
+            $tugas->foto_pelaksanaan = Storage::url('uploads/tugas/' . $tugas->foto_pelaksanaan);
+        }
 
         $id = Auth::user()->id;
         $tugas->aksesUpload = $tugas->petugas_id == $id ? '' : 'disabled';
@@ -273,23 +278,16 @@ class TugasController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'notugas'           => 'required',
-            'foto_pelaksanaan'  => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], [
-            'notugas.required'          => 'No Tugas tidak boleh kosong',
-            'foto_pelaksanaan.required' => 'Foto tidak boleh kosong',
-            'foto_pelaksanaan.image'    => 'Foto harus berupa gambar',
-            'foto_pelaksanaan.mimes'    => 'Foto harus berformat jpeg, png, jpg, gif, atau svg',
-            'foto_pelaksanaan.max'      => 'Ukuran foto maksimal 2MB',
+            'notugas' => 'required|string',
+            'foto_pelaksanaan' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
-        $notugas    = $request->notugas;
-        $fileName   = $notugas . '.' . $request->foto_pelaksanaan->getClientOriginalExtension();
-        $request->foto_pelaksanaan->move(public_path('images/tugas'), $fileName);
+        $notugas = $request->notugas;
+        $file = $request->file('foto_pelaksanaan');
 
         try {
             $client = new Client();
-            $response = $client->request('POST', 'https://simontok.test/api/tugas/upload', [
+            $response = $client->post('https://simontok.test/api/tugas/upload', [
                 'multipart' => [
                     [
                         'name'     => 'notugas',
@@ -297,18 +295,16 @@ class TugasController extends Controller
                     ],
                     [
                         'name'     => 'foto_pelaksanaan',
-                        'contents' => fopen(public_path('images/tugas/' . $fileName), 'r'),
-                        'filename' => $fileName,
+                        'contents' => fopen($file->getPathname(), 'r'),
+                        'filename' => $file->getClientOriginalName(),
                     ],
-                ],
-                'headers' => [
-                    'Accept' => 'application/json',
                 ],
             ]);
 
-            $data = json_decode($response->getBody()->getContents());
-
+            $responseData = json_decode($response->getBody()->getContents(), true);
             return redirect()->back()->with('success', 'Foto berhasil diunggah');
+
+            return response()->json($responseData);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal mengunggah foto: ' . $e->getMessage());
         }
