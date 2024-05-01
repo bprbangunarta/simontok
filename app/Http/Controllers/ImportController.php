@@ -72,21 +72,6 @@ class ImportController extends Controller
         return redirect()->route('kredit.index')->with('success', 'Tunggakan berhasil diimport');
     }
 
-    // public function writeoff(Request $request)
-    // {
-    //     $request->validate([
-    //         'file' => 'required|mimes:csv,xls,xlsx'
-    //     ]);
-
-    //     $file = $request->file('file');
-    //     $fileName = now() . " " . 'WRITEOFF.' . $file->getClientOriginalExtension();
-    //     $file->move('import/writeoff', $fileName);
-
-    //     Excel::import(new WriteoffImport, public_path('/import/writeoff/' . $fileName));
-
-    //     return redirect()->route('writeoff.index')->with('success', 'Writeoff berhasil diimport');
-    // }
-
     public function writeoff(Request $request)
     {
         $request->validate([
