@@ -45,10 +45,18 @@ class ProspekController extends Controller
         ]);
 
         $id = $request->id;
-        $fileName   = $id . '.' . $request->foto_pelaksanaan->getClientOriginalExtension();
-        $request->foto_pelaksanaan->move(public_path('images/prospek'), $fileName);
+        $file = $request->file('foto_pelaksanaan');
+
+        $fileName = $id . '.' . $file->getClientOriginalExtension();
+
+        $file->storeAs('public/uploads/prospek', $fileName);
 
         $prospek = Prospek::where('id', $id)->first();
+
+        if (!$prospek) {
+            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+        }
+
         $prospek->foto_pelaksanaan = $fileName;
         $prospek->save();
 
