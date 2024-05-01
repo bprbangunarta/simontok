@@ -83,9 +83,12 @@ class ProspekController extends Controller
             ['id' => '1', 'status' => 'Berhasil'],
         ];
 
+        $image = Storage::url('uploads/prospek/' . 'default.png');
+
         return view('monitoring.prospek.create', [
             'jenis'  => $jenis,
             'status' => $status,
+            'image'  => $image,
         ]);
     }
 

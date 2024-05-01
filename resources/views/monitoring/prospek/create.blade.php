@@ -17,7 +17,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <img class="img-fluid rounded-3" src="/images/prospek/default.png">
+                                <img class="img-fluid rounded-3" src="{{ url($image) }}">
                             </div>
 
                         </div>
