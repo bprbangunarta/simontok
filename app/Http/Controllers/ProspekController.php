@@ -168,42 +168,33 @@ class ProspekController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'id'                => 'required',
-            'foto_pelaksanaan'  => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], [
-            'notugas.required'          => 'No Tugas tidak boleh kosong',
-            'foto_pelaksanaan.required' => 'Foto tidak boleh kosong',
-            'foto_pelaksanaan.image'    => 'Foto harus berupa gambar',
-            'foto_pelaksanaan.mimes'    => 'Foto harus berformat jpeg, png, jpg, gif, atau svg',
-            'foto_pelaksanaan.max'      => 'Ukuran foto maksimal 2MB',
+            'id' => 'required|string',
+            'foto_pelaksanaan' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $id = $request->id;
-        $fileName = $id . '.' . $request->foto_pelaksanaan->getClientOriginalExtension();
-        $request->foto_pelaksanaan->move(public_path('images/prospek'), $fileName);
+        $file = $request->file('foto_pelaksanaan');
 
         try {
             $client = new Client();
-            $response = $client->request('POST', 'https://simontok.test/api/prospek/upload', [
+            $response = $client->post('https://simontok.bprbangunarta.com/api/prospek/upload', [
                 'multipart' => [
                     [
                         'name'     => 'id',
-                        'contents' => $request->id,
+                        'contents' => $id,
                     ],
                     [
                         'name'     => 'foto_pelaksanaan',
-                        'contents' => fopen(public_path('images/prospek/' . $fileName), 'r'),
-                        'filename' => $fileName,
+                        'contents' => fopen($file->getPathname(), 'r'),
+                        'filename' => $file->getClientOriginalName(),
                     ],
-                ],
-                'headers' => [
-                    'Accept' => 'application/json',
                 ],
             ]);
 
-            $data = json_decode($response->getBody()->getContents());
-
+            $responseData = json_decode($response->getBody()->getContents(), true);
             return redirect()->back()->with('success', 'Foto berhasil diunggah');
+
+            return response()->json($responseData);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal mengunggah foto: ' . $e->getMessage());
         }
