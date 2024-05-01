@@ -87,9 +87,7 @@ class ImportController extends Controller
         $path = $file->storeAs('public/excel/', $nama_file);
 
         // import data
-        // $import = Excel::import(new WriteoffImport(), storage_path('app/public/excel/' . $nama_file));
-        $import = Excel::import(new WriteoffImport, public_path('/storage/excel/' . $nama_file));
-
+        $import = Excel::import(new WriteoffImport(), storage_path('app/public/excel/' . $nama_file));
 
         //remove from server
         Storage::delete($path);
