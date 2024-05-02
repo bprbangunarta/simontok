@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header" style="border-bottom: solid #034871 2px ;">
-                    <img src="https://simontok.bprbangunarta.co.id/assets/img/banner.png" style="height:35px;">
+                    <img src="{{ asset('images/logo.png') }}" style="height:35px;">
                 </h2>
             </div>
         </div>
