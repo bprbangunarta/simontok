@@ -29,7 +29,8 @@ class TelebillingController extends Controller
             $data->where(function ($query) use ($keyword) {
                 $query->where('nama_debitur', 'like', "%{$keyword}%")
                     ->orWhere('wilayah', 'like', "%{$keyword}%")
-                    ->orWhere('hari_tunggakan', '=', $keyword);
+                    ->orWhere('hari_tunggakan', '=', $keyword)
+                    ->orWhere('kode_petugas', 'like', "%{$keyword}%");
             });
         }
 

@@ -33,7 +33,7 @@
                 <table class="table" style="font-size: 13px;">
                     <thead class="fw-bold">
                         <tr>
-                            <td style="width:10%;">Tabungan</td>
+                            <td style="width:10%;">Kredit</td>
                             <td>Nama</td>
                             <td>Tunggakan</td>
                             <td>Hari</td>
@@ -51,7 +51,7 @@
                         $total = $pokok + $bunga + $denda;
                         @endphp
                         <tr>
-                            <td>{{ $item->notabungan }}</td>
+                            <td>{{ $item->nokredit }}</td>
                             <td>{{ $item->nama_debitur }}</td>
                             <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
                             <td>{{ $item->hari_tunggakan }} Hari</td>
@@ -62,11 +62,11 @@
                             </td>
                             <td class="text-uppercase">
                                 @if ($item->petugas)
-                                <a href="{{ route('kredit.index') }}?search={{ $item->petugas->name }}" class="text-primary">
+                                <a href="{{ route('telebilling.index') }}?search={{ $item->kode_petugas }}" class="text-primary">
                                     {{ $item->petugas->username }}
                                 </a>
                                 @else
-                                <a href="{{ route('kredit.index') }}?search={{ $item->kode_petugas }}" class="text-danger">
+                                <a href="{{ route('telebilling.index') }}?search={{ $item->kode_petugas }}" class="text-danger">
                                     {{ $item->kode_petugas }}
                                 </a>
                                 @endif

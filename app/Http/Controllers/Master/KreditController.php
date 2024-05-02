@@ -13,6 +13,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class KreditController extends Controller
 {
@@ -76,7 +77,11 @@ class KreditController extends Controller
         $tugas  = Tugas::with('leader', 'petugas')->where('nokredit', $nokredit)->orderBy('tanggal', 'desc')->get();
         $tugas->each(function ($item) {
             $item->tanggal = Carbon::parse($item->tanggal)->isoFormat('DD-MM-Y');
-            $item->foto_pelaksanaan = $item->foto_pelaksanaan ?? 'images/tugas/default.png';
+            if (is_null($item->foto_pelaksanaan)) {
+                $item->foto_pelaksanaan = Storage::url('uploads/tugas/' . 'default.png');
+            } else {
+                $item->foto_pelaksanaan = Storage::url('uploads/tugas/' . $item->foto_pelaksanaan);
+            }
 
             if ($item->pelaksanaan) {
                 $item->pelaksanaan = $item->pelaksanaan . " ⇒ " . $item->ket_pelaksanaan;
