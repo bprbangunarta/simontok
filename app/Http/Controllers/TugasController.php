@@ -63,9 +63,9 @@ class TugasController extends Controller
 
         $tugas->each(function ($item) {
             if (is_null($item->kredit)) {
-                $item->nama_debitur = $item->writeoff->nama_debitur;
+                $item->nama_debitur = optional($item->writeoff)->nama_debitur;
             } else {
-                $item->nama_debitur = $item->kredit->nama_debitur;
+                $item->nama_debitur = optional($item->kredit)->nama_debitur;
             }
 
             $id = Auth::user()->id;
@@ -81,6 +81,7 @@ class TugasController extends Controller
             $item->btnAccess = $item->leader_id == $id ? '' : 'disabled';
             $item->aksesDelete = $item->tanggal == date('Y-m-d') ? '' : 'disable-clik';
         });
+
 
         return view('monitoring.tugas.index', [
             'tugas' => $tugas,
