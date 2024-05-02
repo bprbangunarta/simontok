@@ -151,6 +151,7 @@ class TelebillingController extends Controller
                 'ket_pelaksanaan'   => 'Penagihan melalui telepon',
                 'hasil'             => $request->hasil,
                 'ket_hasil'         => $request->ket_hasil,
+                'status'            => 'Selesai',
 
                 'tunggakan_pokok'   => $tunggakan->tunggakan_pokok,
                 'tunggakan_bunga'   => $tunggakan->tunggakan_bunga,
