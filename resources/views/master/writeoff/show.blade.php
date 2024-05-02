@@ -241,7 +241,7 @@
                                             <h5 class="modal-title" id="exampleModalLabel1">Foto {{ $item->jenis }}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <img src="/{{ $item->foto_pelaksanaan }}">
+                                        <img src="{{ url($item->foto_pelaksanaan) }}">
                                     </div>
                                 </div>
                             </div>
