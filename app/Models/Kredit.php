@@ -59,4 +59,9 @@ class Kredit extends Model
     {
         return $this->hasMany(Tugas::class, 'nokredit', 'nokredit');
     }
+
+    public function resign()
+    {
+        return $this->hasOne(Resign::class, 'nokaryawan', 'nokaryawan');
+    }
 }

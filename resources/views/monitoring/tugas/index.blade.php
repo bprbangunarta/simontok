@@ -17,7 +17,6 @@
 
                         @can('Telebilling Create')
                         <a href="{{ route('export.telebilling') }}" class="btn btn-success waves-effect waves-light">Export</a>
-                        <a href="{{ route('tugas.print') }}" class="btn btn-dark waves-effect waves-light" target="_blank">Cetak</a>
                         @endcan
                     </div>
                 </div>
