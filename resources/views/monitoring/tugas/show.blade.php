@@ -130,6 +130,22 @@
                             </div>
 
                             <div class="col-md-12 mt-2">
+                                <label class="form-label">Janji Bayar</label>
+                                <input type="text" name="nokredit" value="{{ $tugas->nokredit }}" hidden>
+                                @if ($tugas->janji)
+                                <input type="date" class="form-control @error('janji_bayar') is-invalid @enderror" name="janji_bayar" value="{{ $tugas->janji->tanggal }}" {{ $tugas->aksesLaporan }}>
+                                @else
+                                <input type="date" class="form-control @error('janji_bayar') is-invalid @enderror" name="janji_bayar" value="{{ old('janji_bayar') }}" {{ $tugas->aksesLaporan }}>
+                                @endif
+
+                                @error('janji_bayar')
+                                <div class="mt-1">
+                                    <small class="text-danger">{{ $message }}</small>
+                                </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12 mt-2">
                                 <label class="form-label">Catatan Leader</label>
                                 <textarea class="form-control @error('catatan_leader') is-invalid @enderror" name="catatan_leader" rows="3" {{ $tugas->aksesCatatan }}>{{ $tugas->catatan_leader }}</textarea>
 

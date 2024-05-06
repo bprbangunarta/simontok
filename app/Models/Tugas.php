@@ -55,4 +55,9 @@ class Tugas extends Model
     {
         return $this->hasOne(Verifikasi::class, 'notugas', 'notugas');
     }
+
+    public function janji()
+    {
+        return $this->hasOne(Janji::class, 'nokredit', 'nokredit');
+    }
 }

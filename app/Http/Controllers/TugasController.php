@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cif;
+use App\Models\Janji;
 use App\Models\Kantor;
 use App\Models\Kredit;
 use App\Models\Tugas;
@@ -142,7 +143,7 @@ class TugasController extends Controller
 
     public function show($notugas)
     {
-        $tugas = Tugas::with('kredit', 'writeoff', 'petugas', 'leader')->where('notugas', $notugas)->first();
+        $tugas = Tugas::with('kredit', 'writeoff', 'petugas', 'leader', 'janji')->where('notugas', $notugas)->first();
 
         if (is_null($tugas->kredit)) {
             $tugas->nokredit = $tugas->writeoff->nokredit;
@@ -265,6 +266,24 @@ class TugasController extends Controller
                 $tugas->update([
                     'status' => 'Selesai',
                 ]);
+            }
+
+            if ($request->janji_bayar) {
+                $cekJanji = Janji::where('nokredit', $request->nokredit)->first();
+                if (is_null($cekJanji)) {
+                    Janji::create([
+                        'nokredit'      => $request->nokredit,
+                        'tanggal'       => $request->janji_bayar,
+                        'komitmen'      => $request->ket_hasil,
+                        'petugas_id'    => Auth::user()->id,
+                    ]);
+                } else {
+                    $cekJanji->update([
+                        'tanggal'    => $request->janji_bayar,
+                        'komitmen'   => $request->ket_hasil,
+                        'petugas_id' => Auth::user()->id,
+                    ]);
+                }
             }
 
             $data = json_decode($response->getBody()->getContents());
