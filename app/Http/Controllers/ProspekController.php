@@ -183,7 +183,8 @@ class ProspekController extends Controller
 
         try {
             $client = new Client();
-            $response = $client->post('https://simontok.bprbangunarta.com/api/prospek/upload', [
+            $endpoint = ENV('APP_URL') . '/api/prospek/upload';
+            $response = $client->post($endpoint, [
                 'multipart' => [
                     [
                         'name'     => 'id',

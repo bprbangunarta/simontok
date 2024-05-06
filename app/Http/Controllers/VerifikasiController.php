@@ -96,7 +96,8 @@ class VerifikasiController extends Controller
         } else {
             try {
                 $client = new Client();
-                $response = $client->request('PUT', 'https://simontok.test/api/verifikasi/kredit/' . $notugas, [
+                $endpoint = ENV('APP_URL') . '/api/verifikasi/kredit/' . $notugas;
+                $response = $client->request('PUT', $endpoint, [
                     'form_params' => [
                         'pengguna_kredit'   => $request->pengguna_kredit,
                         'penggunaan_kredit' => $request->penggunaan_kredit,
@@ -151,7 +152,8 @@ class VerifikasiController extends Controller
     {
         try {
             $client = new Client();
-            $response = $client->request('POST', 'https://simontok.test/api/verifikasi/agunan/' . $noreg, [
+            $endpoint = ENV('APP_URL') . '/api/verifikasi/agunan/' . $noreg;
+            $response = $client->request('POST', $endpoint, [
                 'form_params' => [
                     'notugas'       => $request->notugas,
                     'noreg'         => $noreg,
@@ -176,7 +178,8 @@ class VerifikasiController extends Controller
     {
         try {
             $client = new Client();
-            $response = $client->request('PUT', 'https://simontok.test/api/verifikasi/agunan/' . $noreg, [
+            $endpoint = ENV('APP_URL') . '/api/verifikasi/agunan/' . $noreg;
+            $response = $client->request('PUT', $endpoint, [
                 'form_params' => [
                     'kondisi'       => $request->kondisi,
                     'penguasaan'    => $request->penguasaan,
