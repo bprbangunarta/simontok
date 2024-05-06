@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\JapoExport;
 use App\Exports\KreditExport;
 use App\Exports\TelebillingExport;
 use App\Exports\UsersExport;
@@ -26,5 +27,11 @@ class ExportController extends Controller
     {
         $fileName = date('d_m_Y') . "_" . 'TELEBILLING.xlsx';
         return Excel::download(new TelebillingExport, $fileName);
+    }
+
+    public function japo()
+    {
+        $fileName = 'JAPO_' . date('Ymd') . '.xlsx';
+        return Excel::download(new JapoExport, $fileName);
     }
 }
