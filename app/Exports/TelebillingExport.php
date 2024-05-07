@@ -2,13 +2,9 @@
 
 namespace App\Exports;
 
-use App\Models\Kantor;
-use App\Models\Kredit;
 use App\Models\Tugas;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromView;
-use Illuminate\Support\Str;
 
 class TelebillingExport implements FromView
 {

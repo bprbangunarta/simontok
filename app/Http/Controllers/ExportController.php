@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\JapoExport;
 use App\Exports\KreditExport;
 use App\Exports\TelebillingExport;
+use App\Exports\TugasExport;
 use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -33,5 +34,11 @@ class ExportController extends Controller
     {
         $fileName = 'JAPO_' . date('Ymd') . '.xlsx';
         return Excel::download(new JapoExport, $fileName);
+    }
+
+    public function tugas(Request $request)
+    {
+        $fileName = 'PENANGANAN_KREDIT_' . date('Ymd') . '.xlsx';
+        return Excel::download(new TugasExport(request('start_date'), request('end_date'), request('wilayah'), request('petugas'), request('jenis')), $fileName);
     }
 }

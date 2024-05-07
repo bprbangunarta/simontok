@@ -18,6 +18,12 @@
                         @can('Telebilling Create')
                         <a href="{{ route('export.telebilling') }}" class="btn btn-success waves-effect waves-light">Export</a>
                         @endcan
+
+                        @can('Export Read')
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exportTugas">
+                            Export
+                        </button>
+                        @endcan
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
@@ -57,7 +63,11 @@
                                     {{ $item->longDate }}
                                 </a>
                             </td>
-                            <td>{{ $item->nokredit }}</td>
+                            <td>
+                                <a href="{{ route('tugas.index') }}?search={{ $item->nokredit }}" class="text-primary">
+                                    {{ $item->nokredit }}
+                                </a>
+                            </td>
                             <td>
                                 {{ $item->nama_debitur }}
                             </td>
@@ -131,10 +141,111 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exportTugas" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Export Tugas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('export.tugas') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label">Tanggal Mulai</label>
+                        </div>
+                        <div class="col">
+                            <input type="date" class="form-control" name="start_date" required>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label">Tanggal Akhir</label>
+                        </div>
+                        <div class="col">
+                            <input type="date" class="form-control" name="end_date" required>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label">Wilayah</label>
+                        </div>
+                        <div class="col">
+                            <select class="select2 form-select" data-allow-clear="true" name="wilayah">
+                                <option value="">Select</option>
+                                @foreach ($wilayah as $item)
+                                <option value="{{ $item['wilayah'] }}" {{ old('wilayah') == $item['wilayah'] ? 'selected' : '' }}>
+                                    {{ $item['wilayah'] }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label">Petugas</label>
+                        </div>
+                        <div class="col">
+                            <select class="select2 form-select" data-allow-clear="true" name="petugas">
+                                <option value="">Select</option>
+                                @foreach ($petugas as $item)
+                                <option value="{{ $item->id }}" {{ old('petugas') == $item->id ? 'selected' : '' }}>
+                                    {{ $item->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label">Jenis Tugas</label>
+                        </div>
+                        <div class="col">
+                            <select class="select2 form-select" data-allow-clear="true" name="jenis">
+                                <option value="">Select</option>
+                                @foreach ($jenis as $item)
+                                <option value="{{ $item['jenis'] }}" {{ old('jenis') == $item['jenis'] ? 'selected' : '' }}>
+                                    {{ $item['jenis'] }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-success">Export</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('style')
 @endpush
 
 @push('script')
+<script>
+    $(function() {
+        const select2 = $('.select2');
+
+        if (select2.length) {
+            select2.each(function() {
+                var $this = $(this);
+                $this.wrap('<div class="position-relative"></div>').select2({
+                    placeholder: 'Optional',
+                    dropdownParent: $this.parent()
+                });
+            });
+        }
+    });
+</script>
 @endpush

@@ -11,7 +11,9 @@
                     <div class="dataTables_length">
                         <button type="button" class="btn btn-outline-primary waves-effect">Prospek Kredit</button>
 
+                        @can('Prospek Create')
                         <a href="{{ route('prospek.create') }}" class="btn btn-primary waves-effect waves-light">Tambah</a>
+                        @endcan
                         <a href="#" class="btn btn-success waves-effect waves-light">Export</a>
                     </div>
                 </div>

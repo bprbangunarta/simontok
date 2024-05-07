@@ -45,6 +45,10 @@ class AccessController extends Controller
             return strpos($permission->name, 'Verifikasi ') === 0;
         });
 
+        $export = $permissions->filter(function ($permission) {
+            return strpos($permission->name, 'Export ') === 0;
+        });
+
         return view('admin.access.user', [
             'user'       => $user,
             'petugas'    => $petugas,
@@ -55,6 +59,7 @@ class AccessController extends Controller
             'tugas'      => $tugas,
             'prospek'    => $prospek,
             'verifikasi' => $Verifikasi,
+            'export'     => $export,
         ]);
     }
 

@@ -178,6 +178,26 @@
                                         </td>
                                         @endforeach
                                     </tr>
+
+                                    <tr>
+                                        <td class="fw-bold" colspan="5">Rekapitulasi</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Export Data</td>
+                                        @foreach($export as $item)
+                                        @php
+                                        $nameParts = explode(' ', $item->name);
+                                        $permission = $nameParts[1];
+                                        @endphp
+                                        <td>
+                                            <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $item->name }}" {{ $user->permissions()->find($item->id) ? 'checked' : '' }}>
+                                            <label class="form-check-label">
+                                                {{ $permission }}
+                                            </label>
+                                        </td>
+                                        @endforeach
+                                    </tr>
                                     @error('permissions')
                                     <tr>
                                         <td class="text-center" colspan="3"><small class="text-danger">Please select at least one permission</small></td>

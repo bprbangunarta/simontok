@@ -33,9 +33,6 @@ class TugasController extends Controller
         } elseif ($role == 'AO Kredit' || $role == 'Staff Remedial' || $role == 'Customer Care') {
             $data->where('petugas_id', Auth::user()->id)
                 ->where('tanggal', date('Y-m-d'));
-        } else {
-            $data->where('leader_id', Auth::user()->id)
-                ->where('tanggal', '>=', Carbon::now()->subDays(7));
         }
 
         $keyword = request('search');
@@ -83,9 +80,32 @@ class TugasController extends Controller
             $item->aksesDelete = $item->tanggal == date('Y-m-d') ? '' : 'disable-clik';
         });
 
+        $petugas = User::whereIn('role', ['Kepala Seksi Kredit', 'Kepala Seksi Remedial', 'Kepala Seksi Customer Care', 'AO Kredit', 'Staff Remedial', 'Customer Care'])
+            ->where('is_active', 1)
+            ->orderBy('name', 'asc')
+            ->get();
+
+        $wilayah = [
+            ['wilayah' => 'Jalancagak'],
+            ['wilayah' => 'Kalijati'],
+            ['wilayah' => 'Pagaden'],
+            ['wilayah' => 'Pamanukan'],
+            ['wilayah' => 'Pusakajaya'],
+            ['wilayah' => 'Subang'],
+            ['wilayah' => 'Sukamandi'],
+            ['wilayah' => 'Remedial'],
+        ];
+
+        $jenis = [
+            ['jenis' => 'Penagihan'],
+            ['jenis' => 'Telebilling'],
+        ];
 
         return view('monitoring.tugas.index', [
             'tugas' => $tugas,
+            'petugas' => $petugas,
+            'wilayah' => $wilayah,
+            'jenis' => $jenis,
         ]);
     }
 

@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('export/kredit', [ExportController::class, 'kredit'])->name('export.kredit')->middleware(['permission:Kredit Read']);
     Route::get('export/telebilling', [ExportController::class, 'telebilling'])->name('export.telebilling')->middleware(['permission:Telebilling Create']);
     Route::get('export/japo', [ExportController::class, 'japo'])->name('export.japo');
+    Route::post('export/tugas', [ExportController::class, 'tugas'])->name('export.tugas');
 
     // Data Kredit
     Route::get('kredit', [KreditController::class, 'index'])->name('kredit.index')->middleware(['permission:Kredit Read']);
