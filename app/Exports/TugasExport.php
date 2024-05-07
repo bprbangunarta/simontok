@@ -64,9 +64,9 @@ class TugasExport implements FromView
             }
 
             if (is_null($item->foto_pelaksanaan)) {
-                $item->foto_pelaksanaan = ENV('APP_URL') . '/uploads/tugas/default.png';
+                $item->foto_pelaksanaan = ENV('APP_URL') . '/storage/uploads/tugas/default.png';
             } else {
-                $item->foto_pelaksanaan = ENV('APP_URL') . '/uploads/tugas/' . $item->foto_pelaksanaan;
+                $item->foto_pelaksanaan = ENV('APP_URL') . '/storage/uploads/tugas/' . $item->foto_pelaksanaan;
             }
         });
 
