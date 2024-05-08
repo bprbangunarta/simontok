@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('data_verifikasi_agunan', function (Blueprint $table) {
             $table->id();
-            $table->string('notugas')->unique();
-            $table->string('noreg');
+            $table->string('notugas');
+            $table->string('noreg')->unique();
             $table->string('agunan');
             $table->string('kondisi')->nullable();
             $table->string('penguasaan')->nullable();
