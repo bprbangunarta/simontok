@@ -26,4 +26,9 @@ class Janji extends Model
     {
         return $this->belongsTo(Tugas::class, 'nokredit', 'nokredit');
     }
+
+    public function kredit()
+    {
+        return $this->belongsTo(Kredit::class, 'nokredit', 'nokredit');
+    }
 }
