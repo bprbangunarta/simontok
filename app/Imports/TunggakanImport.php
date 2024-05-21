@@ -15,7 +15,7 @@ class TunggakanImport implements ToModel, WithChunkReading, SkipsEmptyRows, With
     public function model(array $row)
     {
         // DB::table('data_tunggakan')->where('nokredit', $row['nokredit'])->delete();
-        DB::table('data_tunggakan')->truncate();
+        // DB::table('data_tunggakan')->truncate();
 
         return new Tunggakan([
             'nokredit'          => $row['nokredit'],
