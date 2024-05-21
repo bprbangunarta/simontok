@@ -14,7 +14,8 @@ class KreditImport implements ToModel, WithChunkReading, SkipsEmptyRows, WithHea
 {
     public function model(array $row)
     {
-        DB::table('data_kredit')->where('nokredit', $row['nokredit'])->delete();
+        // DB::table('data_kredit')->where('nokredit', $row['nokredit'])->delete();
+        DB::table('data_kredit')->truncate();
 
         return new Kredit([
             'nocif'             => $row['nocif'],
