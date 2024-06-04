@@ -49,7 +49,8 @@
 
     <div class="card">
         <div class="card-body">
-            <div class="table-responsive mb-3" style="max-height: 500px; overflow-y: scroll;">
+            <!-- <div class="mb-3" style="max-height: 500px; overflow-y: scroll;"> -->
+            <div class="mb-3">
                 <table class="table" style="font-size: 13px;">
                     <thead class="fw-bold">
                         <tr>
@@ -60,12 +61,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($janji as $index => $item)
-                        @if ($item->tanggal == \Carbon\Carbon::now()->format('Y-m-d'))
-                        <tr class="table-warning">
-                            @else
+                        @forelse ($janji as $index => $item)
                         <tr>
-                            @endif
                             <td>
                                 {{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->isoFormat('dddd') }}
                                 <br>
@@ -85,7 +82,11 @@
                                 @endif
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="4" class="text-center">Tidak ada janji bayar hari ini.</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

@@ -54,9 +54,10 @@ class DashboardController extends Controller
     private function getJanji($role, $kantor, $kode)
     {
         $getJanji = Janji::with('kredit')
-            ->whereHas('kredit') // Tambahkan ini untuk memastikan hanya data dengan relasi kredit yang diambil
-            ->whereMonth('tanggal', now()->month)
-            ->whereYear('tanggal', now()->year);
+            ->whereHas('kredit')
+            ->where('tanggal', DATE('Y-m-d'));
+        // ->whereMonth('tanggal', now()->month)
+        // ->whereYear('tanggal', now()->year);
 
         if ($role == 'Kepala Seksi Kredit' || $role == 'AO Kredit') {
             $getJanji->whereHas('kredit', function ($query) use ($kantor) {

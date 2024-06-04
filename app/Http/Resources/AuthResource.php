@@ -14,10 +14,12 @@ class AuthResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'name'     => $this['user']->name,
-            'username' => $this['user']->username,
-            'token'    => $this['token']
-        ];
+        // return [
+        //     'name'     => $this['user']->name,
+        //     'username' => $this['user']->username,
+        //     'token'    => $this['token']
+        // ];
+
+        return parent::toArray($request);
     }
 }
