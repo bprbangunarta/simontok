@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('data_tunggakan', function (Blueprint $table) {
             $table->id();
             $table->string('nokredit')->unique();
-            $table->integer('tunggakan_pokok');
-            $table->integer('tunggakan_bunga');
-            $table->integer('tunggakan_denda');
-            $table->integer('hari_tunggakan');
+            $table->integer('tunggakan_pokok')->nullable();
+            $table->integer('tunggakan_bunga')->nullable();
+            $table->integer('tunggakan_denda')->nullable();
+            $table->integer('hari_tunggakan')->nullable();
             $table->timestamps();
         });
     }

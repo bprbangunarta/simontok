@@ -49,28 +49,19 @@ class ImportController extends Controller
             'file' => 'required|mimes:csv,xls,xlsx'
         ]);
 
-        $file = $request->file('file');
-
-        // membuat nama file unik
+        $file      = $request->file('file');
         $nama_file = $file->hashName();
+        $path      = $file->storeAs('public/excel/', $nama_file);
 
-        // temporary file
-        $path = $file->storeAs('public/excel/', $nama_file);
-
-        // truncate table
         DB::table('data_kredit')->truncate();
+        DB::table('data_tunggakan')->truncate();
 
-        // import data
         $import = Excel::import(new KreditImport(), storage_path('app/public/excel/' . $nama_file));
-
-        // remove from server
         Storage::delete($path);
 
         if ($import) {
-            // redirect
             return redirect()->route('kredit.index')->with(['success' => 'Kredit Berhasil Diimport!']);
         } else {
-            // redirect
             return redirect()->route('kredit.index')->with(['error' => 'Kredit Gagal Diimport!']);
         }
     }
@@ -81,28 +72,16 @@ class ImportController extends Controller
             'file' => 'required|mimes:csv,xls,xlsx'
         ]);
 
-        $file = $request->file('file');
-
-        // membuat nama file unik
+        $file      = $request->file('file');
         $nama_file = $file->hashName();
+        $path      = $file->storeAs('public/excel/', $nama_file);
 
-        // temporary file
-        $path = $file->storeAs('public/excel/', $nama_file);
-
-        // truncate table
-        DB::table('data_tunggakan')->truncate();
-
-        // import data
         $import = Excel::import(new TunggakanImport(), storage_path('app/public/excel/' . $nama_file));
-
-        // remove from server
         Storage::delete($path);
 
         if ($import) {
-            // redirect
             return redirect()->route('kredit.index')->with(['success' => 'Tunggakan Berhasil Diimport!']);
         } else {
-            // redirect
             return redirect()->route('kredit.index')->with(['error' => 'Tunggakan Gagal Diimport!']);
         }
     }
