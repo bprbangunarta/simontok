@@ -102,7 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('prospek/{prospek}', [ProspekController::class, 'destroy'])->name('prospek.destroy')->middleware(['permission:Prospek Delete']);
 
     // Data Telebilling
-    Route::get('telebilling/index', [TelebillingController::class, 'index'])->name('telebilling.index')->middleware(['permission:Telebilling Read']);
+    Route::get('telebilling', [TelebillingController::class, 'index'])->name('telebilling.index')->middleware(['permission:Telebilling Read']);
     Route::get('telebilling/{nokredit}', [TelebillingController::class, 'show'])->name('telebilling.show')->middleware(['permission:Telebilling Read']);
     Route::post('telebilling', [TelebillingController::class, 'store'])->name('telebilling.store')->middleware(['permission:Telebilling Create']);
 });

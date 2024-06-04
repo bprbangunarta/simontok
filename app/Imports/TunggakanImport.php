@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Kredit;
 use App\Models\Tunggakan;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -20,6 +21,12 @@ class TunggakanImport implements ToCollection, WithHeadingRow, WithChunkReading,
                     'tunggakan_pokok'   => $row['tunggakan_pokok'],
                     'tunggakan_bunga'   => $row['tunggakan_bunga'],
                     'tunggakan_denda'   => $row['tunggakan_denda'],
+                    'hari_tunggakan'    => $row['hari_tunggakan'],
+                    'updated_at'        => Carbon::now(),
+                ]);
+
+            Kredit::where('nokredit', $row['nokredit'])
+                ->update([
                     'hari_tunggakan'    => $row['hari_tunggakan'],
                     'updated_at'        => Carbon::now(),
                 ]);
