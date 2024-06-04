@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('tunggakan_pokok');
             $table->integer('tunggakan_bunga');
             $table->integer('tunggakan_denda');
+            $table->integer('hari_tunggakan');
             $table->timestamps();
         });
     }

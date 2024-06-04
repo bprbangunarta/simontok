@@ -8,6 +8,7 @@ use App\Imports\TunggakanImport;
 use App\Imports\UsersImport;
 use App\Imports\WriteoffImport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,20 +25,20 @@ class ImportController extends Controller
         // membuat nama file unik
         $nama_file = $file->hashName();
 
-        //temporary file
+        // temporary file
         $path = $file->storeAs('public/excel/', $nama_file);
 
         // import data
         $import = Excel::import(new UsersImport(), storage_path('app/public/excel/' . $nama_file));
 
-        //remove from server
+        // remove from server
         Storage::delete($path);
 
         if ($import) {
-            //redirect
+            // redirect
             return redirect()->route('user.index')->with(['success' => 'User Berhasil Diimport!']);
         } else {
-            //redirect
+            // redirect
             return redirect()->route('user.index')->with(['error' => 'User Gagal Diimport!']);
         }
     }
@@ -53,20 +54,23 @@ class ImportController extends Controller
         // membuat nama file unik
         $nama_file = $file->hashName();
 
-        //temporary file
+        // temporary file
         $path = $file->storeAs('public/excel/', $nama_file);
+
+        // truncate table
+        DB::table('data_kredit')->truncate();
 
         // import data
         $import = Excel::import(new KreditImport(), storage_path('app/public/excel/' . $nama_file));
 
-        //remove from server
+        // remove from server
         Storage::delete($path);
 
         if ($import) {
-            //redirect
+            // redirect
             return redirect()->route('kredit.index')->with(['success' => 'Kredit Berhasil Diimport!']);
         } else {
-            //redirect
+            // redirect
             return redirect()->route('kredit.index')->with(['error' => 'Kredit Gagal Diimport!']);
         }
     }
@@ -82,20 +86,23 @@ class ImportController extends Controller
         // membuat nama file unik
         $nama_file = $file->hashName();
 
-        //temporary file
+        // temporary file
         $path = $file->storeAs('public/excel/', $nama_file);
+
+        // truncate table
+        DB::table('data_tunggakan')->truncate();
 
         // import data
         $import = Excel::import(new TunggakanImport(), storage_path('app/public/excel/' . $nama_file));
 
-        //remove from server
+        // remove from server
         Storage::delete($path);
 
         if ($import) {
-            //redirect
+            // redirect
             return redirect()->route('kredit.index')->with(['success' => 'Tunggakan Berhasil Diimport!']);
         } else {
-            //redirect
+            // redirect
             return redirect()->route('kredit.index')->with(['error' => 'Tunggakan Gagal Diimport!']);
         }
     }
@@ -111,20 +118,23 @@ class ImportController extends Controller
         // membuat nama file unik
         $nama_file = $file->hashName();
 
-        //temporary file
+        // temporary file
         $path = $file->storeAs('public/excel/', $nama_file);
+
+        // truncate table
+        DB::table('data_writeoff')->truncate();
 
         // import data
         $import = Excel::import(new WriteoffImport(), storage_path('app/public/excel/' . $nama_file));
 
-        //remove from server
+        // remove from server
         Storage::delete($path);
 
         if ($import) {
-            //redirect
+            // redirect
             return redirect()->route('writeoff.index')->with(['success' => 'Writeoff Berhasil Diimport!']);
         } else {
-            //redirect
+            // redirect
             return redirect()->route('writeoff.index')->with(['error' => 'Writeoff Gagal Diimport!']);
         }
     }
@@ -140,20 +150,23 @@ class ImportController extends Controller
         // membuat nama file unik
         $nama_file = $file->hashName();
 
-        //temporary file
+        // temporary file
         $path = $file->storeAs('public/excel/', $nama_file);
+
+        // truncate table
+        DB::table('data_agunan')->truncate();
 
         // import data
         $import = Excel::import(new AgunanImport(), storage_path('app/public/excel/' . $nama_file));
 
-        //remove from server
+        // remove from server
         Storage::delete($path);
 
         if ($import) {
-            //redirect
+            // redirect
             return redirect()->route('agunan.index')->with(['success' => 'Agunan Berhasil Diimport!']);
         } else {
-            //redirect
+            // redirect
             return redirect()->route('agunan.index')->with(['error' => 'Agunan Gagal Diimport!']);
         }
     }
