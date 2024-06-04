@@ -27,11 +27,11 @@
 
                                 @if ($tugas->aksesUpload == 'disabled')
                                 <div class="mb-0">
-                                    <img class="img-fluid rounded-3" src="/images/tugas/{{ $tugas->foto_pelaksanaan }}">
+                                    <img class="img-fluid rounded-3" src="{{ url($tugas->foto_pelaksanaan) }}">
                                 </div>
                                 @else
                                 <div class="mb-3">
-                                    <img class="img-fluid rounded-3" src="/images/tugas/{{ $tugas->foto_pelaksanaan }}">
+                                    <img class="img-fluid rounded-3" src="{{ url($tugas->foto_pelaksanaan) }}">
                                 </div>
 
                                 <div class="mb-3">

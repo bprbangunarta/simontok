@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class VerifikasiController extends Controller
 {
@@ -17,7 +18,11 @@ class VerifikasiController extends Controller
         $tugas = Tugas::with('kredit', 'petugas', 'leader', 'verifikasi')->where('notugas', $notugas)->first();
         $tugas->tanggal = Carbon::parse($tugas->tanggal)->locale('id')->isoFormat('dddd, D MMMM Y');
         $tugas->kredit->plafon = 'Rp ' . number_format($tugas->kredit->plafon ?? 0, 0, ',', '.');
-        $tugas->foto_pelaksanaan = $tugas->foto_pelaksanaan ?? 'default.png';
+        if (is_null($tugas->foto_pelaksanaan)) {
+            $tugas->foto_pelaksanaan = Storage::url('uploads/tugas/' . 'default.png');
+        } else {
+            $tugas->foto_pelaksanaan = Storage::url('uploads/tugas/' . $tugas->foto_pelaksanaan);
+        }
 
         // Penggunaan Kredit
         $penggunaan = Penggunaan::where('no_spk', $tugas->kredit->nospk)->first();
