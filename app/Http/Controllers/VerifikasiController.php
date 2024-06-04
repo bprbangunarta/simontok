@@ -133,7 +133,11 @@ class VerifikasiController extends Controller
 
         $tugas->tanggal = Carbon::parse($tugas->tanggal)->locale('id')->isoFormat('dddd, D MMMM Y');
         $tugas->kredit->plafon = 'Rp ' . number_format($tugas->kredit->plafon ?? 0, 0, ',', '.');
-        $tugas->foto_pelaksanaan = $tugas->foto_pelaksanaan ?? 'default.png';
+        if (is_null($tugas->foto_pelaksanaan)) {
+            $tugas->foto_pelaksanaan = Storage::url('uploads/tugas/' . 'default.png');
+        } else {
+            $tugas->foto_pelaksanaan = Storage::url('uploads/tugas/' . $tugas->foto_pelaksanaan);
+        }
 
         $id = Auth::user()->id;
         $tugas->aksesUpload = $tugas->petugas_id == $id ? '' : 'disabled';
