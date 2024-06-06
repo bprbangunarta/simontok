@@ -32,7 +32,7 @@ return new class extends Migration
             $table->integer('rate_bunga');
             $table->date('tgl_realisasi');
             $table->date('tgl_jatuh_tempo');
-            $table->integer('hari_tunggakan');
+            $table->integer('hari_tunggakan')->nullable();
             $table->string('kode_petugas');
             $table->boolean('status')->default(true);
             $table->timestamps();

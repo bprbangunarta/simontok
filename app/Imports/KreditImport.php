@@ -37,7 +37,7 @@ class KreditImport implements ToCollection, WithHeadingRow, WithChunkReading, Sk
                 'tgl_realisasi'     => $row['tgl_realisasi'],
                 'tgl_jatuh_tempo'   => $row['tgl_jatuh_tempo'],
                 'kode_petugas'      => $row['kode_petugas'],
-                'hari_tunggakan'    => $row['hari_tunggakan'],
+                'hari_tunggakan'    => 0,
                 'status'            => 1,
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
