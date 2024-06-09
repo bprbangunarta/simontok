@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\AgunanImport;
 use App\Imports\KreditImport;
+use App\Imports\NominatifImport;
 use App\Imports\TunggakanImport;
 use App\Imports\UsersImport;
 use App\Imports\WriteoffImport;
@@ -147,6 +148,29 @@ class ImportController extends Controller
         } else {
             // redirect
             return redirect()->route('agunan.index')->with(['error' => 'Agunan Gagal Diimport!']);
+        }
+    }
+
+    public function nominatif(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file      = $request->file('file');
+        $nama_file = $file->hashName();
+        $path      = $file->storeAs('public/excel/', $nama_file);
+
+        DB::table('data_kredit')->truncate();
+        DB::table('data_tunggakan')->truncate();
+
+        $import = Excel::import(new NominatifImport(), storage_path('app/public/excel/' . $nama_file));
+        Storage::delete($path);
+
+        if ($import) {
+            return redirect()->back()->with(['success' => 'Kredit Berhasil Diimport!']);
+        } else {
+            return redirect()->back()->with(['error' => 'Kredit Gagal Diimport!']);
         }
     }
 }

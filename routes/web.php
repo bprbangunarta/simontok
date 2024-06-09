@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('import/tunggakan', [ImportController::class, 'tunggakan'])->name('import.tunggakan')->middleware(['permission:Kredit Update']);
     Route::post('import/writeoff', [ImportController::class, 'writeoff'])->name('import.writeoff')->middleware(['permission:Writeoff Update']);
     Route::post('import/agunan', [ImportController::class, 'agunan'])->name('import.agunan')->middleware(['permission:Agunan Update']);
+    Route::post('import/nominatif', [ImportController::class, 'nominatif'])->name('import.nominatif')->middleware(['permission:Kredit Update']);
 
     // Data Export
     Route::get('export/user', [ExportController::class, 'user'])->name('export.user')->middleware('permission:User Create');

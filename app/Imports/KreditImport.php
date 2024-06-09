@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Models\Kredit;
 use App\Models\Tunggakan;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -39,14 +38,10 @@ class KreditImport implements ToCollection, WithHeadingRow, WithChunkReading, Sk
                 'kode_petugas'      => $row['kode_petugas'],
                 'hari_tunggakan'    => 0,
                 'status'            => 1,
-                'created_at'        => Carbon::now(),
-                'updated_at'        => Carbon::now(),
             ]);
 
             Tunggakan::create([
                 'nokredit'          => $row['nokredit'],
-                'created_at'        => Carbon::now(),
-                'updated_at'        => Carbon::now(),
             ]);
         }
     }
