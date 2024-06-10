@@ -54,6 +54,7 @@ class TelebillingController extends Controller
 
     public function show($nokredit)
     {
+        $janji = Janji::where('nokredit', $nokredit)->first();
         $kredit = Kredit::with('tunggakan')->where('nokredit', $nokredit)->first();
         if (!$kredit) {
             abort(404);
@@ -109,6 +110,7 @@ class TelebillingController extends Controller
         ];
 
         return view('master.telebilling.show', [
+            'janji'  => $janji,
             'kredit' => $kredit,
             'cif'    => $cif,
             'tugas'  => $tugas,
@@ -162,18 +164,18 @@ class TelebillingController extends Controller
 
             if ($request->janji_bayar) {
                 $cekJanji = Janji::where('nokredit', $request->nokredit)->first();
-                if (is_null($cekJanji)) {
+                if ($cekJanji) {
+                    $cekJanji->update([
+                        'tanggal'    => $request->janji_bayar,
+                        'komitmen'   => $request->ket_hasil,
+                        'petugas_id' => Auth::user()->id,
+                    ]);
+                } else {
                     Janji::create([
                         'nokredit'      => $request->nokredit,
                         'tanggal'       => $request->janji_bayar,
                         'komitmen'      => $request->ket_hasil,
                         'petugas_id'    => Auth::user()->id,
-                    ]);
-                } else {
-                    $cekJanji->update([
-                        'tanggal'    => $request->janji_bayar,
-                        'komitmen'   => $request->ket_hasil,
-                        'petugas_id' => Auth::user()->id,
                     ]);
                 }
             }
