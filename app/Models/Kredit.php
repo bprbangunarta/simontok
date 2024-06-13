@@ -69,4 +69,9 @@ class Kredit extends Model
     {
         return $this->hasOne(Janji::class, 'nokredit', 'nokredit');
     }
+
+    public function klasifikasi()
+    {
+        return $this->hasOne(Klasifikasi::class, 'nokredit', 'nokredit');
+    }
 }

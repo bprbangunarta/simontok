@@ -26,10 +26,10 @@ return new class extends Migration
             $table->integer('tunggakan_pokok')->nullable();
             $table->integer('tunggakan_bunga')->nullable();
             $table->integer('tunggakan_denda')->nullable();
+            $table->string('klasifikasi')->nullable();
             $table->string('status')->default('Proses');
             $table->foreignId('leader_id')->constrained('users');
             $table->foreignId('petugas_id')->constrained('users');
-            $table->string('klasifikasi')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
