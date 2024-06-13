@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th style="width: 50px;font-weight: bold;text-align: center;">No</th>
-            <th style="width: 100px;font-weight: bold;text-align: center;">No. Kredit</th>
+            <th style="width: 100px;font-weight: bold;text-align: center;">nokredit</th>
             <th style="width: 100px;font-weight: bold;text-align: center;">No. CIF</th>
             <th style="width: 100px;font-weight: bold;text-align: center;">No. SPK</th>
             <th style="width: 100px;font-weight: bold;text-align: center;">Jenis</th>
@@ -25,6 +25,7 @@
             <th style="width: 100px;font-weight: bold;text-align: center;">Tgk. Bunga</th>
             <th style="width: 100px;font-weight: bold;text-align: center;">Tgk. Denda</th>
             <th style="width: 100px;font-weight: bold;text-align: center;">Tgk. Hari</th>
+            <th style="width: 100px;font-weight: bold;text-align: center;">klasifikasi</th>
         </tr>
     </thead>
     <tbody>
@@ -60,6 +61,7 @@
             <td>{{ $item->tunggakan->tunggakan_bunga }}</td>
             <td>{{ $item->tunggakan->tunggakan_denda }}</td>
             <td>{{ $item->hari_tunggakan }}</td>
+            <td>{{ $item->klasifikasi == null ? '' : $item->klasifikasi->nama }}</td>
         </tr>
         @endforeach
     </tbody>

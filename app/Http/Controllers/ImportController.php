@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\AgunanImport;
+use App\Imports\KlasifikasiImport;
 use App\Imports\KreditImport;
 use App\Imports\NominatifImport;
 use App\Imports\TunggakanImport;
@@ -171,6 +172,26 @@ class ImportController extends Controller
             return redirect()->back()->with(['success' => 'Kredit Berhasil Diimport!']);
         } else {
             return redirect()->back()->with(['error' => 'Kredit Gagal Diimport!']);
+        }
+    }
+
+    public function klasifikasi(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file      = $request->file('file');
+        $nama_file = $file->hashName();
+        $path      = $file->storeAs('public/excel/', $nama_file);
+
+        $import = Excel::import(new KlasifikasiImport(), storage_path('app/public/excel/' . $nama_file));
+        Storage::delete($path);
+
+        if ($import) {
+            return redirect()->back()->with(['success' => 'Klasifikasi Berhasil Diimport!']);
+        } else {
+            return redirect()->back()->with(['error' => 'Klasifikasi Gagal Diimport!']);
         }
     }
 }

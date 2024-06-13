@@ -22,6 +22,7 @@
                         @endcan
 
                         <a href="{{ route('export.kredit') }}" class="btn btn-success waves-effect waves-light">Export</a>
+                        <a href="#" class="btn btn-warning waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#importKlasifikasi">Klasifikasi</a>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
@@ -160,6 +161,36 @@
                         <div class="d-flex justify-content-between">
                             <label class="form-label">Upload File</label>
                             <a href="{{ asset('import/kredit/importNominatif.xlsx') }}"><small>XLSX Template</small></a>
+                        </div>
+                        <div class="col">
+                            <input type="file" class="form-control" name="file" accept=".xlsx" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="importKlasifikasi" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Import Klasifikasi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('import.klasifikasi') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label">Upload File</label>
+                            <!-- <a href="{{ asset('import/kredit/importNominatif.xlsx') }}"><small>XLSX Template</small></a> -->
                         </div>
                         <div class="col">
                             <input type="file" class="form-control" name="file" accept=".xlsx" required>
