@@ -27,6 +27,7 @@ class Tugas extends Model
         'tunggakan_bunga',
         'tunggakan_denda',
         'status',
+        'klasifikasi',
         'leader_id',
         'petugas_id',
     ];
