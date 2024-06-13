@@ -12,7 +12,8 @@ class Klasifikasi extends Model
 
     protected $fillable = [
         'nokredit',
-        'klasifikasi',
+        'alias',
+        'nama',
     ];
 
     public function kredit()

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('data_klasifikasi', function (Blueprint $table) {
             $table->id();
             $table->string('nokredit')->unique();
-            $table->string('klasifikasi');
+            $table->string('alias');
+            $table->string('nama');
             $table->timestamps();
         });
     }

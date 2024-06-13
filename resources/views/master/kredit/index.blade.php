@@ -50,6 +50,7 @@
                             <td>Plafon</td>
                             <td>Wilayah</td>
                             <td>Petugas</td>
+                            <td>Klasifikasi</td>
                             <td class="text-center" style="width:10%;">Aksi</td>
                         </tr>
                     </thead>
@@ -75,6 +76,7 @@
                                 </a>
                                 @endif
                             </td>
+                            <td>{{ $item->klasifikasi == null ? '-' : $item->klasifikasi->nama }}</td>
                             <td class="text-center">
                                 <a href="{{ route('kredit.show', $item->nokredit) }}">
                                     <span class="badge badge-center bg-warning w-px-30 h-px-30">
