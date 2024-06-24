@@ -29,7 +29,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'username' => 'Username yang anda masukkan salah',
+            'username' => "Username yang anda masukkan salah",
             'password' => 'Password yang anda masukkan salah',
         ]);
     }
