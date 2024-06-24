@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nokredit')->unique();
             $table->string('alias')->nullable();
-            $table->string('nama');
+            $table->string('nama')->nullable();
             $table->timestamps();
         });
     }
