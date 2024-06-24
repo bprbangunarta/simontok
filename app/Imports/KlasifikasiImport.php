@@ -18,15 +18,16 @@ class KlasifikasiImport implements ToCollection, WithHeadingRow, WithChunkReadin
             $klasifikasi = Klasifikasi::where('nokredit', $row['nokredit'])->first();
             if ($klasifikasi) {
                 $klasifikasi->update([
-                    'klasifikasi' => $row['klasifikasi'],
+                    'alias' => $row['klasifikasi'],
+                    'nama'  => $row['klasifikasi'],
+                ]);
+            } else {
+                Klasifikasi::create([
+                    'nokredit' => $row['nokredit'],
+                    'alias'    => $row['klasifikasi'],
+                    'nama'     => $row['klasifikasi'],
                 ]);
             }
-            // else {
-            //     Klasifikasi::create([
-            //         'nokredit' => $row['nokredit'],
-            //         'nama' => $row['klasifikasi'],
-            //     ]);
-            // }
         }
     }
 
