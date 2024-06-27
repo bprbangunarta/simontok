@@ -97,6 +97,7 @@ class TugasController extends Controller
         ];
 
         $jenis = [
+            ['jenis' => 'Prospek'],
             ['jenis' => 'Penagihan'],
             ['jenis' => 'Telebilling'],
         ];
