@@ -88,3 +88,10 @@
         <div>Prospek Kredit</div>
     </a>
 </li>
+
+<li class="menu-item {{ Request::is('') ? 'active' : '' }}">
+    <a href="#" class="menu-link @can('Prospek Read') @else disable-clik @endcan">
+        <i class="menu-icon tf-icons ti ti-chart-pie"></i>
+        <div>Rekapitulasi</div>
+    </a>
+</li>

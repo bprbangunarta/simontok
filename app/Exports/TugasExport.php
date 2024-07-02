@@ -47,8 +47,10 @@ class TugasExport implements FromView
         if ($this->jenis) {
             if ($this->jenis == 'Telebilling') {
                 $data->where('jenis',  $this->jenis);
-            } else {
-                $data->where('jenis', '!=', 'Telebilling');
+            } elseif ($this->jenis == 'Prospek') {
+                $data->where('jenis',  $this->jenis);
+            } elseif ($this->jenis == 'Penagihan') {
+                $data->where('jenis',  $this->jenis);
             }
         }
 
