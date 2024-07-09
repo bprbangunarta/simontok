@@ -89,9 +89,39 @@
     </a>
 </li>
 
-<li class="menu-item {{ Request::is('') ? 'active' : '' }}">
-    <a href="#" class="menu-link @can('Prospek Read') @else disable-clik @endcan">
+<li class="menu-item {{ Request::is('') ? 'active show' : '' }}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons ti ti-chart-pie"></i>
         <div>Rekapitulasi</div>
+    </a>
+    <ul class="menu-sub">
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link {{ Request::is('') ? 'active' : '' }}">
+                <div>Petugas</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link {{ Request::is('') ? 'active' : '' }}">
+                <div>Wilayah</div>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li class="menu-header small text-uppercase">
+    <span class="menu-header-text">Reporting</span>
+</li>
+
+<li class="menu-item">
+    <a href="{{ route('export.klasifikasi.kredit') }}" class="menu-link {{ Request::is('') ? 'active' : '' }}">
+        <i class="menu-icon tf-icons ti ti-table-down"></i>
+        <div>Klasifikasi Kredit</div>
+    </a>
+</li>
+
+<li class="menu-item">
+    <a href="{{ route('export.penanganan.kredit') }}" class="menu-link {{ Request::is('') ? 'active' : '' }}">
+        <i class="menu-icon tf-icons ti ti-table-down"></i>
+        <div>Penanganan Kredit</div>
     </a>
 </li>

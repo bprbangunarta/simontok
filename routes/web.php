@@ -63,6 +63,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('export/telebilling', [ExportController::class, 'telebilling'])->name('export.telebilling')->middleware(['permission:Telebilling Create']);
     Route::get('export/japo', [ExportController::class, 'japo'])->name('export.japo');
     Route::post('export/tugas', [ExportController::class, 'tugas'])->name('export.tugas');
+    Route::get('export/klasifikasi/kredit', [ExportController::class, 'klasifikasi_kredit'])->name('export.klasifikasi.kredit');
+    Route::get('export/penanganan/kredit', [ExportController::class, 'penanganan_kredit'])->name('export.penanganan.kredit');
 
     // Data Kredit
     Route::get('kredit', [KreditController::class, 'index'])->name('kredit.index')->middleware(['permission:Kredit Read']);
