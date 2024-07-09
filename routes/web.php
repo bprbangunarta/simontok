@@ -14,6 +14,7 @@ use App\Http\Controllers\Master\TelebillingController;
 use App\Http\Controllers\Master\WriteoffController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProspekController;
+use App\Http\Controllers\RekapController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\VerifikasiController;
 use Illuminate\Support\Facades\Route;
@@ -110,4 +111,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('telebilling', [TelebillingController::class, 'index'])->name('telebilling.index')->middleware(['permission:Telebilling Read']);
     Route::get('telebilling/{nokredit}', [TelebillingController::class, 'show'])->name('telebilling.show')->middleware(['permission:Telebilling Read']);
     Route::post('telebilling', [TelebillingController::class, 'store'])->name('telebilling.store')->middleware(['permission:Telebilling Create']);
+
+    Route::get('rekap/petugas', [RekapController::class, 'rekap_petugas'])->name('rekap.petugas');
+    Route::get('rekap/petugas/{id}/{tahun}/{bulan}', [RekapController::class, 'show_rekap_petugas'])->name('rekap.petugas.show');
+    Route::get('rekap/wilayah', [RekapController::class, 'rekap_wilayah'])->name('rekap.wilayah');
 });
