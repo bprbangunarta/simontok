@@ -17,7 +17,8 @@
                         <div>
                             <form action="{{ route('rekap.petugas') }}" method="GET">
                                 <div class="dataTables_filter">
-                                    <input type="date" class="form-control" name="search" value="{{ request('search') }}">
+                                    <input type="date" class="form-control" name="tanggal1" value="{{ request('tanggal1') }}" style="margin-right: -15px;" required>
+                                    <input type="date" class="form-control" name="tanggal2" value="{{ request('tanggal2') }}" required>
                                     <button type="submit" class="btn btn-icon btn-label-github waves-effect">
                                         <i class="tf-icons ti ti-filter"></i>
                                     </button>
