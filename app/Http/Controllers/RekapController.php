@@ -12,9 +12,9 @@ class RekapController extends Controller
 {
     public function rekap_petugas(Request $request)
     {
-        $search = $request->input('search');
-        $tahun  = $search ? Carbon::parse($search)->format('Y') : now()->year;
-        $bulan  = $search ? Carbon::parse($search)->format('m') : now()->month;
+        $bulan = $request->input('bulan');
+        $tahun  = $bulan ? Carbon::parse($bulan)->format('Y') : now()->year;
+        $bulan  = $bulan ? Carbon::parse($bulan)->format('m') : now()->month;
 
         $rekap = DB::table('rekap_petugas')
             ->where('tahun', $tahun)
