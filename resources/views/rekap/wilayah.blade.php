@@ -31,7 +31,7 @@
 
         <div class="card-body" style="margin-top: -20px;">
             <div class="table-responsive text-nowrap mb-3">
-                <table class="table" style="font-size: 13px;">
+                <table class="table" id="dataRekap" style="font-size: 13px;">
                     <thead class="fw-bold">
                         <tr>
                             <th>Wilayah</th>
@@ -78,19 +78,16 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="row" style="margin-bottom: -30px;">
-                <div class="col-sm-12 col-md-12">
-                    <div>
-                        <nav aria-label="Page navigation">
-                            {{ $rekap->withQueryString()->onEachSide(0)->links('helper.pagination') }}
-                        </nav>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
 </div>
 @endsection
+
+@push('script')
+<script>
+    $(document).ready(function() {
+        $('#dataRekap').DataTable();
+    });
+</script>
+@endpush

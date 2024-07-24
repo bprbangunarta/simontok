@@ -3,36 +3,11 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-
     <div class="card">
-        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer border-bottom">
-            <div class="row mx-1">
-                <div class="col-sm-12 col-md-6">
-                    <div class="dataTables_length">
-                        <button type="button" class="btn btn-success">Export</button>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center flex-wrap me-1">
-                        <div>
-                            <form action="{{ route('rekap.petugas') }}" method="GET">
-                                <div class="dataTables_filter">
-                                    <input type="date" class="form-control" name="tanggal1" value="{{ request('tanggal1') }}" style="margin-right: -15px;" required>
-                                    <input type="date" class="form-control" name="tanggal2" value="{{ request('tanggal2') }}" required>
-                                    <button type="submit" class="btn btn-icon btn-label-github waves-effect">
-                                        <i class="tf-icons ti ti-filter"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="card-body" style="margin-top: -20px;">
             <div class="table-responsive text-nowrap mb-3">
-                <table class="table" style="font-size: 13px;">
+                <table class="table" id="dataRekap" style="font-size: 13px;">
                     <thead class="fw-bold">
                         <tr>
                             <th>Petugas</th>
@@ -80,18 +55,16 @@
                 </table>
             </div>
 
-            <div class="row" style="margin-bottom: -30px;">
-                <div class="col-sm-12 col-md-12">
-                    <div>
-                        <nav aria-label="Page navigation">
-                            {{ $rekap->withQueryString()->onEachSide(0)->links('helper.pagination') }}
-                        </nav>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </div>
 
+    </div>
 </div>
 @endsection
+
+@push('script')
+<script>
+    $(document).ready(function() {
+        $('#dataRekap').DataTable();
+    });
+</script>
+@endpush

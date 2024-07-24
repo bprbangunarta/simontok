@@ -19,7 +19,7 @@ class RekapController extends Controller
         $rekap = DB::table('rekap_petugas')
             ->where('tahun', $tahun)
             ->where('bulan', $bulan)
-            ->paginate(10);
+            ->get();
 
         return view('rekap.petugas', compact('rekap'));
     }
@@ -45,7 +45,7 @@ class RekapController extends Controller
         $rekap = DB::table('rekap_wilayah')
             ->where('tahun', $tahun)
             ->where('bulan', $bulan)
-            ->paginate(10);
+            ->get();
 
         return view('rekap.wilayah', compact('rekap'));
     }
