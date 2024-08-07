@@ -105,8 +105,12 @@
                 <div>Wilayah</div>
             </a>
         </li>
-</li>
-</ul>
+        <li class="menu-item {{ Request::is('rekap/prospek') ? 'active' : '' }}">
+            <a href="{{ route('rekap.prospek') }}" class="menu-link">
+                <div>Prospek</div>
+            </a>
+        </li>
+    </ul>
 </li>
 
 <li class="menu-header small text-uppercase">

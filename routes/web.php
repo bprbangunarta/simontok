@@ -116,4 +116,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('rekap/petugas', [RekapController::class, 'show_rekap_petugas'])->name('rekap.petugas.show');
     Route::get('rekap/wilayah', [RekapController::class, 'rekap_wilayah'])->name('rekap.wilayah');
     Route::post('rekap/wilayah', [RekapController::class, 'show_rekap_wilayah'])->name('rekap.wilayah.show');
+    Route::get('rekap/prospek', [RekapController::class, 'rekap_prospek'])->name('rekap.prospek');
 });

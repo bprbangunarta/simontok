@@ -35,6 +35,7 @@ class RekapController extends Controller
 
         $rekap = DB::table('data_tugas')
             ->where('petugas_id', $id)
+            ->where('data_tugas.jenis', 'Penagihan')
             ->whereBetween('tanggal', [$tanggalAwal, $tanggalAkhir])
             ->whereNull('pelaksanaan')
             ->get();
@@ -81,6 +82,7 @@ class RekapController extends Controller
             ->join('data_kantor', 'data_kantor.id', '=', 'users.kantor_id')
             ->join('data_kredit', 'data_kredit.nokredit', '=', 'data_tugas.nokredit')
             ->where('users.is_active', true)
+            ->where('data_tugas.jenis', 'Penagihan')
             ->where('data_kantor.nama', $wilayah)
             ->whereBetween('tanggal', [$tanggalAwal, $tanggalAkhir])
             ->whereNull('pelaksanaan')
@@ -94,5 +96,10 @@ class RekapController extends Controller
         }
 
         return view('rekap.wilayah.show', compact('rekap'));
+    }
+
+    public function rekap_prospek()
+    {
+        return view('rekap.prospek.index');
     }
 }
