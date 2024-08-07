@@ -113,6 +113,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('telebilling', [TelebillingController::class, 'store'])->name('telebilling.store')->middleware(['permission:Telebilling Create']);
 
     Route::get('rekap/petugas', [RekapController::class, 'rekap_petugas'])->name('rekap.petugas');
-    Route::get('rekap/petugas/{id}/{tahun}/{bulan}', [RekapController::class, 'show_rekap_petugas'])->name('rekap.petugas.show');
+    Route::post('rekap/petugas', [RekapController::class, 'show_rekap_petugas'])->name('rekap.petugas.show');
     Route::get('rekap/wilayah', [RekapController::class, 'rekap_wilayah'])->name('rekap.wilayah');
+    Route::post('rekap/wilayah', [RekapController::class, 'show_rekap_wilayah'])->name('rekap.wilayah.show');
 });

@@ -89,18 +89,18 @@
     </a>
 </li>
 
-<li class="menu-item {{ Route::is('rekap.petugas', 'rekap.wilayah') ? 'open' : '' }}">
+<li class="menu-item {{ Request::is('rekap/petugas', 'rekap/wilayah') ? 'open' : '' }}">
     <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons ti ti-chart-pie"></i>
         <div>Rekapitulasi</div>
     </a>
     <ul class="menu-sub">
-        <li class="menu-item {{ Route::is('rekap.petugas') ? 'active' : '' }}">
+        <li class="menu-item {{ Request::is('rekap/petugas') ? 'active' : '' }}">
             <a href="{{ route('rekap.petugas') }}" class="menu-link">
                 <div>Petugas</div>
             </a>
         </li>
-        <li class="menu-item {{ Route::is('rekap.wilayah') ? 'active' : '' }}">
+        <li class="menu-item {{ Request::is('rekap/wilayah') ? 'active' : '' }}">
             <a href="{{ route('rekap.wilayah') }}" class="menu-link">
                 <div>Wilayah</div>
             </a>

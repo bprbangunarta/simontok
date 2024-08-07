@@ -21,19 +21,36 @@ class RekapController extends Controller
             ->where('bulan', $bulan)
             ->get();
 
-        return view('rekap.petugas', compact('rekap'));
+        return view('rekap.petugas.index', compact('rekap'));
     }
 
-    public function show_rekap_petugas($id, $tahun, $bulan)
+    public function show_rekap_petugas()
     {
-        $tugas = Tugas::where('petugas_id', $id)
+        $id     = request('id');
+        $bulan  = request('bulan');
+        $tahun  = request('tahun');
+
+        $tanggalAwal = Carbon::create($tahun, $bulan, 1)->toDateString();
+        $tanggalAkhir = Carbon::create($tahun, $bulan, 1)->endOfMonth()->toDateString();
+
+        $rekap = DB::table('data_tugas')
+            ->where('petugas_id', $id)
+            ->whereBetween('tanggal', [$tanggalAwal, $tanggalAkhir])
             ->whereNull('pelaksanaan')
-            ->where('tanggal', 'like', "$tahun-$bulan%")
             ->get();
 
-        dd($tugas);
+        foreach ($rekap as $index => $item) {
+            $item->kredit = DB::table('data_kredit')
+                ->where('nokredit', $item->nokredit)
+                ->first();
 
-        // return response()->json($tugas);
+            $item->kredit->baki_debet = number_format($item->kredit->baki_debet, 0, ',', '.');
+
+            $item->tunggakan = $item->tunggakan_pokok + $item->tunggakan_bunga + $item->tunggakan_denda;
+            $item->tunggakan_pokok = number_format($item->tunggakan_pokok, 0, ',', '.');
+        }
+
+        return view('rekap.petugas.show', compact('rekap'));
     }
 
     public function rekap_wilayah(Request $request)
@@ -47,6 +64,35 @@ class RekapController extends Controller
             ->where('bulan', $bulan)
             ->get();
 
-        return view('rekap.wilayah', compact('rekap'));
+        return view('rekap.wilayah.index', compact('rekap'));
+    }
+
+    public function show_rekap_wilayah()
+    {
+        $wilayah = request('wilayah');
+        $bulan   = request('bulan');
+        $tahun   = request('tahun');
+
+        $tanggalAwal = Carbon::create($tahun, $bulan, 1)->toDateString();
+        $tanggalAkhir = Carbon::create($tahun, $bulan, 1)->endOfMonth()->toDateString();
+
+        $rekap = DB::table('data_tugas')
+            ->join('users', 'users.id', '=', 'data_tugas.petugas_id')
+            ->join('data_kantor', 'data_kantor.id', '=', 'users.kantor_id')
+            ->join('data_kredit', 'data_kredit.nokredit', '=', 'data_tugas.nokredit')
+            ->where('users.is_active', true)
+            ->where('data_kantor.nama', $wilayah)
+            ->whereBetween('tanggal', [$tanggalAwal, $tanggalAkhir])
+            ->whereNull('pelaksanaan')
+            ->get();
+
+        foreach ($rekap as $index => $item) {
+            $item->baki_debet = number_format($item->baki_debet, 0, ',', '.');
+
+            $item->tunggakan = $item->tunggakan_pokok + $item->tunggakan_bunga + $item->tunggakan_denda;
+            $item->tunggakan_pokok = number_format($item->tunggakan_pokok, 0, ',', '.');
+        }
+
+        return view('rekap.wilayah.show', compact('rekap'));
     }
 }
