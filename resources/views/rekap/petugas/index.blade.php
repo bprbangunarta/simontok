@@ -68,10 +68,10 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('rekap.petugas.show') }}" class="btn btn-sm btn-primary" onclick="event.preventDefault(); document.getElementById('show-form-{{ $item->id }}').submit();">Detail</a>
+                                <a href="{{ route('rekap.petugas.show') }}" class="btn btn-sm btn-primary" target="_blank" onclick="event.preventDefault(); document.getElementById('show-form-{{ $item->id }}').submit();">Detail</a>
                             </td>
 
-                            <form id="show-form-{{ $item->id }}" action="{{ route('rekap.petugas.show') }}" method="POST" style="display: none;">
+                            <form id="show-form-{{ $item->id }}" action="{{ route('rekap.petugas.show') }}" method="POST" target="_blank" style="display: none;">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                 <input type="hidden" name="tahun" value="{{ $item->tahun }}">
