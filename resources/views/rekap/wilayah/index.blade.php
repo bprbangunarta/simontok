@@ -67,10 +67,10 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('rekap.wilayah.show') }}" class="btn btn-sm btn-primary" target="_blank" onclick="event.preventDefault(); document.getElementById('show-form-{{ $item->wilayah }}').submit();">Detail</a>
+                                <a href="{{ route('rekap.wilayah.show') }}" class="btn btn-sm btn-primary" onclick="event.preventDefault(); document.getElementById('show-form-{{ $item->wilayah }}').submit();">Detail</a>
                             </td>
 
-                            <form id="show-form-{{ $item->wilayah }}" action="{{ route('rekap.wilayah.show') }}" method="POST" target="_blank" style="display: none;">
+                            <form id="show-form-{{ $item->wilayah }}" action="{{ route('rekap.wilayah.show') }}" method="POST" style="display: none;">
                                 @csrf
                                 <input type="hidden" name="wilayah" value="{{ $item->wilayah }}">
                                 <input type="hidden" name="tahun" value="{{ $item->tahun }}">
