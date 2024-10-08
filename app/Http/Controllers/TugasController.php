@@ -268,7 +268,8 @@ class TugasController extends Controller
     public function update(Request $request, $notugas)
     {
         try {
-            $client = new Client();
+            // $client = new Client();
+            $client = new Client(['verify' => false]);
             $endpoint = ENV('APP_URL') . '/api/tugas/' . $notugas;
             $response = $client->request('PUT', $endpoint, [
                 'form_params' => [
@@ -327,7 +328,8 @@ class TugasController extends Controller
         $file = $request->file('foto_pelaksanaan');
 
         try {
-            $client = new Client();
+            // $client = new Client();
+            $client = new Client(['verify' => false]);
             $endpoint = ENV('APP_URL') . '/api/tugas/upload';
             $response = $client->post($endpoint, [
                 'multipart' => [

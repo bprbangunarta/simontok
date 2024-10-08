@@ -100,7 +100,8 @@ class VerifikasiController extends Controller
             return redirect()->back()->with('success', 'Tugas berhasil diperbarui');
         } else {
             try {
-                $client = new Client();
+                // $client = new Client();
+                $client = new Client(['verify' => false]);
                 $endpoint = ENV('APP_URL') . '/api/verifikasi/kredit/' . $notugas;
                 $response = $client->request('PUT', $endpoint, [
                     'form_params' => [
@@ -160,7 +161,8 @@ class VerifikasiController extends Controller
     public function store_agunan(Request $request, $noreg)
     {
         try {
-            $client = new Client();
+            // $client = new Client();
+            $client = new Client(['verify' => false]);
             $endpoint = ENV('APP_URL') . '/api/verifikasi/agunan/' . $noreg;
             $response = $client->request('POST', $endpoint, [
                 'form_params' => [
@@ -186,7 +188,8 @@ class VerifikasiController extends Controller
     public function update_agunan(Request $request, $noreg)
     {
         try {
-            $client = new Client();
+            // $client = new Client();
+            $client = new Client(['verify' => false]);
             $endpoint = ENV('APP_URL') . '/api/verifikasi/agunan/' . $noreg;
             $response = $client->request('PUT', $endpoint, [
                 'form_params' => [
