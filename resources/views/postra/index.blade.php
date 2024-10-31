@@ -18,21 +18,42 @@
                             <th>No. HP</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($kredit as $item)
-                        <tr class="{{ $item->status == false ? '' : 'table-success' }}">
-                            <td>
-                                <a href="{{ route('postra.show', $item->noacc) }}">{{ $item->noacc }}</a>
-                            </td>
-                            <td>{{ $item->fname }}</td>
-                            <td>{{ $item->alamat }}</td>
-                            <td>Rp {{ number_format($item->plafond_awal, 0, ',', '.') }}</td>
-                            <td>{{ $item->tgleff }}</td>
-                            <td>{{ $item->nohp }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+
+                    @forelse ($kredit as $item)
+                    <tr class="{{ $item->tugas == null ? '' : 'table-success' }}">
+                        <td>
+                            @if ($item->tugas == null)
+                            <a href="{{ route('postra.create') }}">
+                                {{ $item->nokredit }}
+                            </a>
+                            @else
+                            <a href="{{ route('postra.edit', $item->tugas) }}">
+                                {{ $item->nokredit }}
+                            </a>
+                            @endif
+                        </td>
+                        <td>{{ $item->nama_debitur }}</td>
+                        <td>{{ $item->alamat }}</td>
+                        <td>{{ $item->plafon }}</td>
+                        <td>{{ $item->tgl_realisasi }}</td>
+                        <td>{{ $item->nohp }}</td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Data tidak ditemukan</td>
+                    </tr>
+                    @endforelse
                 </table>
+            </div>
+
+            <div class="row" style="margin-bottom: -30px;">
+                <div class="col-sm-12 col-md-12">
+                    <div>
+                        <nav aria-label="Page navigation">
+                            {{ $kredit->withQueryString()->onEachSide(0)->links('helper.pagination') }}
+                        </nav>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -44,8 +65,11 @@
 <script>
     $(document).ready(function() {
         $('#dataRekap').DataTable({
-            "paging": true,
-            "info": true
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "lengthChange": false,
         });
     });
 </script>

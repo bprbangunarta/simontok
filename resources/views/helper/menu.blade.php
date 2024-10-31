@@ -50,7 +50,7 @@
     </a>
 </li>
 
-<li class="menu-item {{ Route::is('postra.index', 'postra.show') ? 'active' : '' }}">
+<li class="menu-item {{ Route::is('postra.index', 'postra.create', 'postra.edit') ? 'active' : '' }}">
     <a href="{{ route('postra.index') }}" class="menu-link">
         <i class="menu-icon tf-icons ti ti-table-alias"></i>
         <div>Data Postra</div>

@@ -11,16 +11,31 @@
                     <div class="col-12">
                         <div class="card-body text-nowrap">
 
-                            <div class="mb-3">
-                                <label class="form-label">No. Kredit</label>
-                                <input type="text" class="form-control" value="{{ $data['no_kredit'] }}">
-                            </div>
+                            <form action="{{ route('postra.update.photo', $tugas->notugas) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="mb-3">
+                                    <label class="form-label">No. Kredit</label>
+                                    <input type="text" class="form-control" value="{{ $tugas->kredit->nokredit }}">
+                                </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Nama Debitur</label>
-                                <input type="text" class="form-control" value="{{ $data['pengguna_kredit'] }}">
-                            </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Debitur</label>
+                                    <input type="text" class="form-control" value="{{ $tugas->kredit->nama_debitur }}">
+                                </div>
 
+                                <div class="mb-3">
+                                    <img class="img-fluid rounded-3" src="{{ $tugas->foto_pelaksanaan }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <input type="file" class="form-control" name="foto_pelaksanaan" accept=".heic, .jpg, .jpeg, .png">
+                                </div>
+
+                                <div class="mb-0">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light w-100">Upload</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -35,11 +50,11 @@
                         <div class="card-header pt-2">
                             <ul class="nav nav-tabs card-header-tabs">
                                 <li class="nav-item">
-                                    <a href="{{ route('postra.show', $data['no_kredit']) }}" class="nav-link {{ Request::query('data') == null ? 'active' : '' }}">Verifikasi Kredit</a>
+                                    <a href="{{ route('postra.edit', $tugas->notugas) }}" class="nav-link {{ Request::query('data') == null ? 'active' : '' }}">Verifikasi Kredit</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="{{ route('postra.show', $data['no_kredit']) }}?data=agunan" class="nav-link {{ Request::query('data') == 'agunan' ? 'active' : '' }}">Verifikasi Agunan</a>
+                                    <a href="{{ route('postra.edit', $tugas->notugas) }}?data=agunan" class="nav-link {{ Request::query('data') == 'agunan' ? 'active' : '' }}">Verifikasi Agunan</a>
                                 </li>
                             </ul>
                         </div>
@@ -47,13 +62,13 @@
                         @if (Request::query('data') == null)
                         <div class="tab-content">
                             <div class="tab-pane fade active show">
-                                <form action="{{ route('postra.store', $data['no_kredit']) }}" method="POST">
+                                <form action="{{ route('postra.update', $tugas->notugas) }}" method="POST">
                                     @csrf
-
+                                    @method('PUT')
                                     <div class="row" style="margin-top: -10px;">
                                         <div class="col-md-6 mt-2">
                                             <label class="form-label">Pengguna Kredit</label>
-                                            <input type="text" class="form-control" name="pengguna_kredit" value="{{ $data['pengguna_kredit'] }}">
+                                            <input type="text" class="form-control" name="pengguna_kredit" value="{{ $tugas->verifikasi->pengguna_kredit ?? $tugas->kredit->nama_debitur }}">
 
                                             @error('pengguna_kredit')
                                             <small class="text-danger">{{ $message }}</small>
@@ -62,7 +77,7 @@
 
                                         <div class="col-md-6 mt-2">
                                             <label class="form-label">Penggunaan Kredit</label>
-                                            <input type="text" class="form-control" name="penggunaan_kredit" value="{{ $data['penggunaan_kredit'] }}">
+                                            <input type="text" class="form-control" name="penggunaan_kredit" value="{{ $tugas->verifikasi->penggunaan_kredit }}">
 
 
                                             @error('penggunaan_kredit')
@@ -72,7 +87,7 @@
 
                                         <div class="col-md-6 mt-2">
                                             <label class="form-label">Alamat Debitur</label>
-                                            <textarea class="form-control" name="alamat_rumah" rows="4">{{ $data['alamat_rumah'] }}</textarea>
+                                            <textarea class="form-control" name="alamat_rumah" rows="4">{{ $tugas->verifikasi->alamat_rumah ?? $tugas->kredit->alamat }}</textarea>
 
                                             @error('alamat_rumah')
                                             <small class="text-danger">{{ $message }}</small>
@@ -81,7 +96,7 @@
 
                                         <div class="col-md-6 mt-2">
                                             <label class="form-label">Cara Pembayaran</label>
-                                            <textarea class="form-control" name="cara_pembayaran" rows="4">{{ old('cara_pembayaran') }}</textarea>
+                                            <textarea class="form-control" name="cara_pembayaran" rows="4">{{ $tugas->verifikasi->cara_pembayaran }}</textarea>
 
                                             @error('cara_pembayaran')
                                             <small class="text-danger">{{ $message }}</small>
@@ -90,7 +105,7 @@
 
                                         <div class="col-md-6 mt-2">
                                             <label class="form-label">Pekerjaan Debitur</label>
-                                            <textarea class="form-control" name="usaha_debitur" rows="4">{{ old('usaha_debitur') }}</textarea>
+                                            <textarea class="form-control" name="usaha_debitur" rows="4">{{ $tugas->verifikasi->usaha_debitur }}</textarea>
 
                                             @error('usaha_debitur')
                                             <small class="text-danger">{{ $message }}</small>
@@ -99,7 +114,7 @@
 
                                         <div class="col-md-6 mt-2">
                                             <label class="form-label">Karakter / Kondisi Debitur</label>
-                                            <textarea class="form-control" name="karakter_debitur" rows="4">{{ old('karakter_debitur') }}</textarea>
+                                            <textarea class="form-control" name="karakter_debitur" rows="4">{{ $tugas->verifikasi->karakter_debitur }}</textarea>
 
                                             @error('karakter_debitur')
                                             <small class="text-danger">{{ $message }}</small>
@@ -108,7 +123,7 @@
 
                                         <div class="col-md-6 mt-2">
                                             <label class="form-label">Nomor Debitur</label>
-                                            <input class="form-control" type="number" name="nomor_debitur" value="{{ $data['nomor_debitur'] }}">
+                                            <input class="form-control" type="number" name="nomor_debitur" value="{{ $tugas->verifikasi->nomor_debitur ?? trim($nasabah->nohp) }}">
 
                                             @error('nomor_debitur')
                                             <small class="text-danger">{{ $message }}</small>
@@ -117,7 +132,7 @@
 
                                         <div class="col-md-6 mt-2">
                                             <label class="form-label">Nomor Pendamping</label>
-                                            <input class="form-control" type="number" name="nomor_pendamping" value="{{ old('nomor_pendamping') }}">
+                                            <input class="form-control" type="number" name="nomor_pendamping" value="{{ $tugas->verifikasi->nomor_pendamping ?? trim($nasabah->nofax) }}">
 
                                             @error('nomor_pendamping')
                                             <small class="text-danger">{{ $message }}</small>
@@ -128,7 +143,7 @@
                                     <hr>
                                     <div>
                                         <a href="{{ route('postra.index') }}" class="btn btn-label-secondary waves-effect">Kembali</a>
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light" style="float: right;">Simpan</button>
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light" style="float: right;">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -157,6 +172,10 @@
                                             @endforelse
                                         </tbody>
                                     </table>
+                                </div>
+                                <br>
+                                <div>
+                                    <a href="{{ route('postra.edit', $tugas->notugas) }}" class="btn btn-label-secondary waves-effect">Kembali</a>
                                 </div>
                             </div>
                         </div>
