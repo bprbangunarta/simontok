@@ -52,11 +52,22 @@ class PostraController extends Controller
             return redirect()->back()->with('error', 'Data tidak ditemukan');
         }
 
+        $agunan = DB::connection('sqlsrv')->table('m_loan_jaminan as a')
+            ->select('a.noacc', 'a.noreg', 'b.catatan')
+            ->join('m_detil_jaminan as b', 'a.noreg', '=', 'b.noreg')
+            ->where('a.noacc', $nokredit)->get();
+
+        foreach ($agunan as $item) {
+            $cekAgunan = VerifikasiAgunan::where('noreg', trim($item->noreg))->first();
+            $item->penguasaan = $cekAgunan->penguasaan ?? null;
+            $item->kondisi = $cekAgunan->kondisi ?? null;
+        }
+
         $nasabah = DB::connection('sqlsrv')->table('m_cif')
             ->select('nocif', 'nohp', 'nofax')
             ->where('nocif', $kredit->nocif)->first();
 
-        return view('postra.create', compact('kredit', 'nasabah'));
+        return view('postra.create', compact('kredit', 'agunan', 'nasabah'));
     }
 
     public function store($nokredit, Request $request)

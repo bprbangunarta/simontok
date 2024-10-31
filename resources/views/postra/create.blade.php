@@ -49,11 +49,12 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">Verifikasi Agunan</a>
+                                    <a href="{{ route('postra.create', $kredit->nokredit) }}?data=agunan" class="nav-link {{ Request::query('data') == 'agunan' ? 'active' : '' }}">Verifikasi Agunan</a>
                                 </li>
                             </ul>
                         </div>
 
+                        @if (Request::query('data') == null)
                         <div class="tab-content">
                             <div class="tab-pane fade active show">
                                 <form action="{{ route('postra.store', $kredit->nokredit) }}" method="POST">
@@ -141,6 +142,43 @@
                                 </form>
                             </div>
                         </div>
+                        @elseif (Request::query('data') == 'agunan')
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show">
+                                <div class="row" style="margin-top: -10px;">
+                                    <table class="table border-top">
+                                        <thead>
+                                            <tr>
+                                                <td>Noreg</td>
+                                                <td>Agunan</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($agunan as $item)
+                                            <tr>
+                                                <td>{{ $item->noreg }}</td>
+                                                <td>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modal{{ $item->noreg }}">
+                                                        {{ $item->catatan }}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @empty
+                                            <tr>
+                                                <td colspan=" 2" class="text-center">Data tidak ditemukan
+                                                </td>
+                                            </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div>
+                                    <a href="{{ route('postra.create', $kredit->nokredit) }}" class="btn btn-label-secondary waves-effect">Kembali</a>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
