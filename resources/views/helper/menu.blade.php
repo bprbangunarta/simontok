@@ -50,6 +50,13 @@
     </a>
 </li>
 
+<li class="menu-item {{ Route::is('postra.index', 'postra.show') ? 'active' : '' }}">
+    <a href="{{ route('postra.index') }}" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-table-alias"></i>
+        <div>Data Postra</div>
+    </a>
+</li>
+
 <li class="menu-item {{ Request::is('kredit', 'kredit/*') ? 'active' : '' }}">
     <a href="{{ route('kredit.index') }}" class="menu-link @can('Kredit Read') @else disable-clik @endcan">
         <i class="menu-icon tf-icons ti ti-credit-card"></i>

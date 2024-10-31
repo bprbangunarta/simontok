@@ -12,6 +12,7 @@ use App\Http\Controllers\Master\AgunanController;
 use App\Http\Controllers\Master\KreditController;
 use App\Http\Controllers\Master\TelebillingController;
 use App\Http\Controllers\Master\WriteoffController;
+use App\Http\Controllers\PostraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProspekController;
 use App\Http\Controllers\RekapController;
@@ -111,6 +112,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('telebilling', [TelebillingController::class, 'index'])->name('telebilling.index')->middleware(['permission:Telebilling Read']);
     Route::get('telebilling/{nokredit}', [TelebillingController::class, 'show'])->name('telebilling.show')->middleware(['permission:Telebilling Read']);
     Route::post('telebilling', [TelebillingController::class, 'store'])->name('telebilling.store')->middleware(['permission:Telebilling Create']);
+
+    // Data Postra
+    Route::get('data-postra', [PostraController::class, 'index'])->name('postra.index');
+    Route::get('data-postra/{nokredit}', [PostraController::class, 'show'])->name('postra.show');
 
     Route::get('rekap/petugas', [RekapController::class, 'rekap_petugas'])->name('rekap.petugas');
     Route::post('rekap/petugas', [RekapController::class, 'show_rekap_petugas'])->name('rekap.petugas.show');
