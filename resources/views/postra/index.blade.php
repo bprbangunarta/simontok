@@ -5,9 +5,32 @@
 <div class="container-xxl flex-grow-1 container-p-y">
 
     <div class="card">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer border-bottom">
+            <div class="row mx-1">
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length">
+                        <button type="button" class="btn btn-outline-primary waves-effect">Data Postra</button>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center flex-wrap me-1">
+                        <div>
+                            <form action="{{ route('postra.index') }}" method="GET">
+                                <div class="dataTables_filter">
+                                    <label>Pencarian
+                                        <input type="search" class="form-control" name="search" value="{{ request('search') }}">
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card-body" style="margin-top: -20px;">
             <div class="table-responsive text-nowrap mb-3">
-                <table class="table" id="dataRekap" style="font-size: 13px;">
+                <table class="table" style="font-size: 13px;">
                     <thead class="fw-bold">
                         <tr>
                             <th>No. Kredit</th>
@@ -34,7 +57,7 @@
                         </td>
                         <td>{{ $item->nama_debitur }}</td>
                         <td>{{ $item->alamat }}</td>
-                        <td>{{ $item->plafon }}</td>
+                        <td>{{ number_format($item->plafon, 0, ',', '.') }}</td>
                         <td>{{ $item->tgl_realisasi }}</td>
                         <td>{{ $item->nohp }}</td>
                     </tr>
@@ -55,22 +78,9 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
 </div>
 @endsection
-
-@push('script')
-<script>
-    $(document).ready(function() {
-        $('#dataRekap').DataTable({
-            "paging": false,
-            "ordering": false,
-            "info": false,
-            "searching": false,
-            "lengthChange": false,
-        });
-    });
-</script>
-@endpush

@@ -17,8 +17,19 @@ class PostraController extends Controller
 {
     public function index()
     {
-        $kredit = Kredit::where('produk_id', '16')
-            ->orderBy('nokredit', 'desc')->paginate(10);
+        $data = Kredit::where('produk_id', '16')
+            ->orderBy('nokredit', 'desc');
+
+        $keyword = request('search');
+        if (!empty($keyword)) {
+            $data->where(function ($query) use ($keyword) {
+                $query->where('nokredit', 'like', "%{$keyword}%")
+                    ->orWhere('tgl_realisasi', 'like', "%{$keyword}%")
+                    ->orWhere('nama_debitur', 'like', "%{$keyword}%");
+            });
+        }
+
+        $kredit = $data->paginate(10);
 
         foreach ($kredit as $item) {
             $cekTugas = Tugas::where('nokredit', $item->nokredit)->where('jenis', 'Verifikasi')->first();
