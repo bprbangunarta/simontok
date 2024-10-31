@@ -178,16 +178,16 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
 
-                                                        <form action="{{ route('verifikasi.agunan', $item->noreg) }}" method="POST">
+                                                        <form action="{{ route('postra.update.agunan', $item->noreg) }}" method="POST">
                                                             @csrf
-
+                                                            @method('PUT')
                                                             <div class="modal-body" style="margin-top: -20px;">
                                                                 <div class="row">
                                                                     <div class="d-flex justify-content-between">
                                                                         <label class="form-label">Kondisi Agunan</label>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <textarea class="form-control" name="kondisi" rows="3" required></textarea>
+                                                                        <textarea class="form-control" name="kondisi" rows="3" required>{{ $item->kondisi }}</textarea>
                                                                     </div>
                                                                 </div>
 
@@ -196,7 +196,7 @@
                                                                         <label class="form-label">Penguasaan Agunan</label>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <textarea class="form-control" name="penguasaan" rows="3" required></textarea>
+                                                                        <textarea class="form-control" name="penguasaan" rows="3" required>{{ $item->penguasaan }}</textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>

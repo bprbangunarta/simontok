@@ -120,6 +120,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('postra/edit/{notugas}', [PostraController::class, 'edit'])->name('postra.edit');
     Route::put('postra/edit/{notugas}', [PostraController::class, 'update'])->name('postra.update');
     Route::put('postra-foto/{notugas}', [PostraController::class, 'updatePhoto'])->name('postra.update.photo');
+    Route::put('postra-agunan/{noreg}', [PostraController::class, 'updateAgunan'])->name('postra.update.agunan');
 
     Route::get('rekap/petugas', [RekapController::class, 'rekap_petugas'])->name('rekap.petugas');
     Route::post('rekap/petugas', [RekapController::class, 'show_rekap_petugas'])->name('rekap.petugas.show');

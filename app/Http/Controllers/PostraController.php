@@ -156,6 +156,12 @@ class PostraController extends Controller
             ->join('m_detil_jaminan as b', 'a.noreg', '=', 'b.noreg')
             ->where('a.noacc', $tugas->kredit->nokredit)->get();
 
+        foreach ($agunan as $item) {
+            $cekAgunan = VerifikasiAgunan::where('notugas', $notugas)->where('noreg', trim($item->noreg))->first();
+            $item->penguasaan = $cekAgunan->penguasaan ?? null;
+            $item->kondisi = $cekAgunan->kondisi ?? null;
+        }
+
         $nasabah = DB::connection('sqlsrv')->table('m_cif')
             ->select('nocif', 'nohp', 'nofax')
             ->where('nocif', $tugas->kredit->nocif)->first();
@@ -261,6 +267,38 @@ class PostraController extends Controller
             DB::commit();
 
             return redirect()->back()->with('success', 'Foto Pelaksanaan berhasil diubah');
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan, silahkan coba lagi');
+        }
+    }
+
+    public function updateAgunan($noreg, Request $request)
+    {
+        $request->validate([
+            'penguasaan' => 'required',
+            'kondisi'    => 'required',
+        ]);
+
+        $agunan = VerifikasiAgunan::where('noreg', $noreg)->first();
+
+        if (!$agunan) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $dataAgunan = [
+                'penguasaan' => $request->penguasaan,
+                'kondisi'    => $request->kondisi,
+            ];
+            $agunan->update($dataAgunan);
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Verifikasi Agunan berhasil diubah');
         } catch (\Exception $e) {
             DB::rollback();
 
