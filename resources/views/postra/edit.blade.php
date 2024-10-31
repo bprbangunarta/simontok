@@ -163,11 +163,58 @@
                                             @forelse ($agunan as $item)
                                             <tr>
                                                 <td>{{ $item->noreg }}</td>
-                                                <td>{{ $item->catatan }}</td>
+                                                <td>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modal{{ $item->noreg }}">
+                                                        {{ $item->catatan }}
+                                                    </a>
+                                                </td>
                                             </tr>
+
+                                            <div class="modal fade" id="modal{{ $item->noreg }}" tabindex="-1" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header mb-3">
+                                                            <h5 class="modal-title" id="exampleModalLabel1">Verifikasi Agunan</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+
+                                                        <form action="{{ route('verifikasi.agunan', $item->noreg) }}" method="POST">
+                                                            @csrf
+
+                                                            <div class="modal-body" style="margin-top: -20px;">
+                                                                <input class="form-control mb-2" type="text" name="notugas" value="{{ $tugas->notugas }}" hidden>
+                                                                <input class="form-control mb-2" type="text" name="agunan" value="{{ $item->catatan }}" hidden>
+
+                                                                <div class="row">
+                                                                    <div class="d-flex justify-content-between">
+                                                                        <label class="form-label">Kondisi Agunan</label>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <textarea class="form-control" name="kondisi" rows="3" required></textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="d-flex justify-content-between">
+                                                                        <label class="form-label">Penguasaan Agunan</label>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <textarea class="form-control" name="penguasaan" rows="3" required></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-primary">Verifikasi</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             @empty
                                             <tr>
-                                                <td colspan="2" class="text-center">Data tidak ditemukan</td>
+                                                <td colspan=" 2" class="text-center">Data tidak ditemukan
+                                                </td>
                                             </tr>
                                             @endforelse
                                         </tbody>
