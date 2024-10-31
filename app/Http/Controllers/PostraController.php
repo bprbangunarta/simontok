@@ -194,12 +194,6 @@ class PostraController extends Controller
             DB::beginTransaction();
 
             $notugas = strtoupper(substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 9));
-            $tunggakan = Tunggakan::where('nokredit', $tugas->kredit->nokredit)->first();
-
-            $leader = User::where('role', 'Kepala Seksi Customer Care')
-                ->where('kantor_id', Auth::user()->kantor_id)
-                ->where('is_active', 1)
-                ->first();
 
             $dataVerifikasi = [
                 'pengguna_kredit'   => $request->pengguna_kredit,
@@ -214,11 +208,6 @@ class PostraController extends Controller
             $tugas->verifikasi()->update($dataVerifikasi);
 
             $dataTugas = [
-                'tanggal'           => date('Y-m-d'),
-                'jenis'             => 'Verifikasi',
-                'pelaksanaan'       => 'Verifikasi Kredit',
-                'ket_pelaksanaan'   => 'Melakukan verifikasi melalui telepon',
-                'hasil'             => 'Validasi Data Pengajuan Kredit',
                 'ket_hasil'         => "Pengguna Kredit: {$request->pengguna_kredit}, Penggunaan Kredit: {$request->penggunaan_kredit}, Cara Pembayaran: {$request->cara_pembayaran}, Usaha Debitur: {$request->usaha_debitur}, Karakter Debitur: {$request->karakter_debitur}, Alamat Debitur: {$request->alamat_rumah}",
                 'status'            => 'Selesai',
             ];
