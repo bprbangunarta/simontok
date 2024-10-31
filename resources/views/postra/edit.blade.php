@@ -16,12 +16,12 @@
                                 @method('PUT')
                                 <div class="mb-3">
                                     <label class="form-label">No. Kredit</label>
-                                    <input type="text" class="form-control" value="{{ $tugas->kredit->nokredit }}">
+                                    <input type="text" class="form-control" value="{{ $tugas->kredit->nokredit }}" readonly>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Nama Debitur</label>
-                                    <input type="text" class="form-control" value="{{ $tugas->kredit->nama_debitur }}">
+                                    <input type="text" class="form-control" value="{{ $tugas->kredit->nama_debitur }}" readonly>
                                 </div>
 
                                 <div class="mb-3">
@@ -182,9 +182,6 @@
                                                             @csrf
 
                                                             <div class="modal-body" style="margin-top: -20px;">
-                                                                <input class="form-control mb-2" type="text" name="notugas" value="{{ $tugas->notugas }}" hidden>
-                                                                <input class="form-control mb-2" type="text" name="agunan" value="{{ $item->catatan }}" hidden>
-
                                                                 <div class="row">
                                                                     <div class="d-flex justify-content-between">
                                                                         <label class="form-label">Kondisi Agunan</label>
@@ -205,7 +202,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-primary">Verifikasi</button>
+                                                                <button type="submit" class="btn btn-primary">Update</button>
                                                             </div>
                                                         </form>
                                                     </div>

@@ -23,7 +23,7 @@
                     <tr class="{{ $item->tugas == null ? '' : 'table-success' }}">
                         <td>
                             @if ($item->tugas == null)
-                            <a href="{{ route('postra.create') }}">
+                            <a href="{{ route('postra.create', $item->nokredit) }}">
                                 {{ $item->nokredit }}
                             </a>
                             @else

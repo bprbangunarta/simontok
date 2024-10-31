@@ -13,6 +13,7 @@ class VerifikasiAgunan extends Model
 
     protected $table = 'data_verifikasi_agunan';
     protected $fillable = [
+        'notugas',
         'noreg',
         'agunan',
         'kondisi',

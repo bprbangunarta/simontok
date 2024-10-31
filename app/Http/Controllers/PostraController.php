@@ -7,6 +7,7 @@ use App\Models\Tugas;
 use App\Models\Tunggakan;
 use App\Models\User;
 use App\Models\Verifikasi;
+use App\Models\VerifikasiAgunan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,14 +33,109 @@ class PostraController extends Controller
         return view('postra.index', compact('kredit'));
     }
 
-    public function create()
+    public function create($nokredit)
     {
-        return view('postra.create');
+        $kredit = Kredit::where('nokredit', $nokredit)->first();
+
+        if (!$kredit) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        $nasabah = DB::connection('sqlsrv')->table('m_cif')
+            ->select('nocif', 'nohp', 'nofax')
+            ->where('nocif', $kredit->nocif)->first();
+
+        return view('postra.create', compact('kredit', 'nasabah'));
     }
 
-    public function store(Request $request)
+    public function store($nokredit, Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'pengguna_kredit'   => 'required',
+            'penggunaan_kredit' => 'required',
+            'alamat_rumah'      => 'required',
+            'cara_pembayaran'   => 'required',
+            'usaha_debitur'     => 'required',
+            'karakter_debitur'  => 'required',
+            'nomor_debitur'     => 'required',
+            'nomor_pendamping'  => 'nullable',
+        ], [
+            'pengguna_kredit.required'   => 'Pengguna Kredit wajib diisi',
+            'penggunaan_kredit.required' => 'Penggunaan Kredit wajib diisi',
+            'alamat_rumah.required'      => 'Alamat Rumah wajib diisi',
+            'cara_pembayaran.required'   => 'Cara Pembayaran wajib diisi',
+            'usaha_debitur.required'     => 'Usaha Debitur wajib diisi',
+            'karakter_debitur.required'  => 'Karakter Debitur wajib diisi',
+            'nomor_debitur.required'     => 'Nomor Debitur wajib diisi',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $notugas = strtoupper(substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 9));
+            $tunggakan = Tunggakan::where('nokredit', $nokredit)->first();
+
+            $leader = User::where('role', 'Kepala Seksi Customer Care')
+                ->where('kantor_id', Auth::user()->kantor_id)
+                ->where('is_active', 1)
+                ->first();
+
+            $dataTugas = [
+                'notugas'           => $notugas,
+                'nokredit'          => $request->nokredit,
+                'tanggal'           => date('Y-m-d'),
+                'jenis'             => 'Verifikasi',
+                'pelaksanaan'       => 'Verifikasi Kredit',
+                'ket_pelaksanaan'   => 'Melakukan verifikasi melalui telepon',
+                'hasil'             => 'Validasi Data Pengajuan Kredit',
+                'ket_hasil'         => "Pengguna Kredit: {$request->pengguna_kredit}, Penggunaan Kredit: {$request->penggunaan_kredit}, Cara Pembayaran: {$request->cara_pembayaran}, Usaha Debitur: {$request->usaha_debitur}, Karakter Debitur: {$request->karakter_debitur}, Alamat Debitur: {$request->alamat_rumah}",
+                'status'            => 'Selesai',
+                'tunggakan_pokok'   => $tunggakan->tunggakan_pokok,
+                'tunggakan_bunga'   => $tunggakan->tunggakan_bunga,
+                'tunggakan_denda'   => $tunggakan->tunggakan_denda,
+                'petugas_id'        => Auth::user()->id,
+                'leader_id'         => $leader->id,
+            ];
+            Tugas::create($dataTugas);
+
+            $dataVerifikasi = [
+                'notugas'           => $notugas,
+                'pengguna_kredit'   => $request->pengguna_kredit,
+                'penggunaan_kredit' => $request->penggunaan_kredit,
+                'usaha_debitur'     => $request->usaha_debitur,
+                'cara_pembayaran'   => $request->cara_pembayaran,
+                'alamat_rumah'      => $request->alamat_rumah,
+                'karakter_debitur'  => $request->karakter_debitur,
+                'nomor_debitur'     => $request->nomor_debitur,
+                'nomor_pendamping'  => $request->nomor_pendamping,
+            ];
+            Verifikasi::create($dataVerifikasi);
+
+            $agunan = DB::connection('sqlsrv')->table('m_loan_jaminan as a')
+                ->select('a.noacc', 'a.noreg', 'b.catatan')
+                ->join('m_detil_jaminan as b', 'a.noreg', '=', 'b.noreg')
+                ->where('a.noacc', $nokredit)
+                ->get();
+
+            foreach ($agunan as $item) {
+                $dataAgunan = [
+                    'notugas'    => $notugas,
+                    'noreg'      => trim($item->noreg),
+                    'agunan'     => trim($item->catatan),
+                    'kondisi'    => null,
+                    'penguasaan' => null,
+                ];
+                VerifikasiAgunan::create($dataAgunan);
+            }
+
+            DB::commit();
+
+            return redirect()->route('postra.edit', $notugas)->with('success', 'Verifikasi Kredit berhasil dibuat');
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan, silahkan coba lagi');
+        }
     }
 
     public function edit($notugas)

@@ -115,10 +115,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Data Postra
     Route::get('postra', [PostraController::class, 'index'])->name('postra.index');
-    Route::get('postra/create', [PostraController::class, 'create'])->name('postra.create');
-    Route::post('postra/create', [PostraController::class, 'store'])->name('postra.store');
-    Route::get('postra/{notugas}', [PostraController::class, 'edit'])->name('postra.edit');
-    Route::put('postra/{notugas}', [PostraController::class, 'update'])->name('postra.update');
+    Route::get('postra/{nokredit}', [PostraController::class, 'create'])->name('postra.create');
+    Route::post('postra/{nokredit}', [PostraController::class, 'store'])->name('postra.store');
+    Route::get('postra/edit/{notugas}', [PostraController::class, 'edit'])->name('postra.edit');
+    Route::put('postra/edit/{notugas}', [PostraController::class, 'update'])->name('postra.update');
     Route::put('postra-foto/{notugas}', [PostraController::class, 'updatePhoto'])->name('postra.update.photo');
 
     Route::get('rekap/petugas', [RekapController::class, 'rekap_petugas'])->name('rekap.petugas');
