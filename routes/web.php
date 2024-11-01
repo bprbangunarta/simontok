@@ -114,13 +114,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('telebilling', [TelebillingController::class, 'store'])->name('telebilling.store')->middleware(['permission:Telebilling Create']);
 
     // Data Postra
-    Route::get('postra', [PostraController::class, 'index'])->name('postra.index');
-    Route::get('postra/{nokredit}', [PostraController::class, 'create'])->name('postra.create');
-    Route::post('postra/{nokredit}', [PostraController::class, 'store'])->name('postra.store');
-    Route::get('postra/edit/{notugas}', [PostraController::class, 'edit'])->name('postra.edit');
-    Route::put('postra/edit/{notugas}', [PostraController::class, 'update'])->name('postra.update');
-    Route::put('postra-foto/{notugas}', [PostraController::class, 'updatePhoto'])->name('postra.update.photo');
-    Route::put('postra-agunan/{noreg}', [PostraController::class, 'updateAgunan'])->name('postra.update.agunan');
+    Route::get('postra', [PostraController::class, 'index'])->name('postra.index')->middleware(['permission:Telebilling Read']);
+    Route::get('postra/{nokredit}', [PostraController::class, 'create'])->name('postra.create')->middleware(['permission:Telebilling Read']);
+    Route::post('postra/{nokredit}', [PostraController::class, 'store'])->name('postra.store')->middleware(['permission:Telebilling Create']);
+    Route::get('postra/edit/{notugas}', [PostraController::class, 'edit'])->name('postra.edit')->middleware(['permission:Telebilling Read']);
+    Route::put('postra/edit/{notugas}', [PostraController::class, 'update'])->name('postra.update')->middleware(['permission:Telebilling Create']);
+    Route::put('postra-foto/{notugas}', [PostraController::class, 'updatePhoto'])->name('postra.update.photo')->middleware(['permission:Telebilling Create']);
+    Route::put('postra-agunan/{noreg}', [PostraController::class, 'updateAgunan'])->name('postra.update.agunan')->middleware(['permission:Telebilling Create']);
 
     Route::get('rekap/petugas', [RekapController::class, 'rekap_petugas'])->name('rekap.petugas');
     Route::post('rekap/petugas', [RekapController::class, 'show_rekap_petugas'])->name('rekap.petugas.show');
