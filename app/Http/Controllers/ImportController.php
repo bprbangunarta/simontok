@@ -51,20 +51,18 @@ class ImportController extends Controller
             'file' => 'required|mimes:csv,xls,xlsx'
         ]);
 
-        $file      = $request->file('file');
-        $nama_file = $file->hashName();
-        $path      = $file->storeAs('public/excel/', $nama_file);
+        $filePath = $request->file('file')->store('temp');
+        $import = new KreditImport();
 
         DB::table('data_kredit')->truncate();
         DB::table('data_tunggakan')->truncate();
 
-        $import = Excel::import(new KreditImport(), storage_path('app/public/excel/' . $nama_file));
-        Storage::delete($path);
+        Excel::queueImport($import, $filePath);
 
         if ($import) {
-            return redirect()->route('kredit.index')->with(['success' => 'Kredit Berhasil Diimport!']);
+            return redirect()->back()->with(['success' => 'Kredit sedang diproses!']);
         } else {
-            return redirect()->route('kredit.index')->with(['error' => 'Kredit Gagal Diimport!']);
+            return redirect()->back()->with(['error' => 'Kredit gagal diimport!']);
         }
     }
 
@@ -74,17 +72,15 @@ class ImportController extends Controller
             'file' => 'required|mimes:csv,xls,xlsx'
         ]);
 
-        $file      = $request->file('file');
-        $nama_file = $file->hashName();
-        $path      = $file->storeAs('public/excel/', $nama_file);
+        $filePath = $request->file('file')->store('temp');
+        $import = new TunggakanImport();
 
-        $import = Excel::import(new TunggakanImport(), storage_path('app/public/excel/' . $nama_file));
-        Storage::delete($path);
+        Excel::queueImport($import, $filePath);
 
         if ($import) {
-            return redirect()->route('kredit.index')->with(['success' => 'Tunggakan Berhasil Diimport!']);
+            return redirect()->back()->with(['success' => 'Tunggakan sedang diproses!']);
         } else {
-            return redirect()->route('kredit.index')->with(['error' => 'Tunggakan Gagal Diimport!']);
+            return redirect()->back()->with(['error' => 'Tunggakan gagal diimport!']);
         }
     }
 
@@ -149,29 +145,6 @@ class ImportController extends Controller
         } else {
             // redirect
             return redirect()->route('agunan.index')->with(['error' => 'Agunan Gagal Diimport!']);
-        }
-    }
-
-    public function nominatif(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:csv,xls,xlsx'
-        ]);
-
-        $file      = $request->file('file');
-        $nama_file = $file->hashName();
-        $path      = $file->storeAs('public/excel/', $nama_file);
-
-        DB::table('data_kredit')->truncate();
-        DB::table('data_tunggakan')->truncate();
-
-        $import = Excel::import(new NominatifImport(), storage_path('app/public/excel/' . $nama_file));
-        Storage::delete($path);
-
-        if ($import) {
-            return redirect()->back()->with(['success' => 'Kredit Berhasil Diimport!']);
-        } else {
-            return redirect()->back()->with(['error' => 'Kredit Gagal Diimport!']);
         }
     }
 

@@ -5,12 +5,13 @@ namespace App\Imports;
 use App\Models\Kredit;
 use App\Models\Tunggakan;
 use Illuminate\Support\Collection;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class KreditImport implements ToCollection, WithHeadingRow, WithChunkReading, SkipsEmptyRows
+class KreditImport implements ToCollection, WithHeadingRow, WithChunkReading, SkipsEmptyRows, ShouldQueue
 {
     public function collection(Collection $rows)
     {
@@ -48,6 +49,6 @@ class KreditImport implements ToCollection, WithHeadingRow, WithChunkReading, Sk
 
     public function chunkSize(): int
     {
-        return 500;
+        return 1000;
     }
 }

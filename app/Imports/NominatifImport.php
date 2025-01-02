@@ -12,8 +12,8 @@ class NominatifImport implements WithMultipleSheets, SkipsUnknownSheets
         return [
             'kredit'    => new KreditImport(),
             'tunggakan' => new TunggakanImport(),
-            'agunan'    => new AgunanImport(),
-            'writeoff'  => new WriteoffImport(),
+            // 'agunan'    => new AgunanImport(),
+            // 'writeoff'  => new WriteoffImport(),
         ];
     }
 

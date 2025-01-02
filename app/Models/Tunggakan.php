@@ -15,6 +15,7 @@ class Tunggakan extends Model
         'tunggakan_pokok',
         'tunggakan_bunga',
         'tunggakan_denda',
+        'hari_tunggakan'
     ];
 
     public function kredit()
