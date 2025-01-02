@@ -60,9 +60,9 @@ class ImportController extends Controller
         Excel::queueImport($import, $filePath);
 
         if ($import) {
-            return redirect()->back()->with(['success' => 'Kredit sedang diproses!']);
+            return redirect()->back()->with(['success' => 'Import kredit sedang diproses!']);
         } else {
-            return redirect()->back()->with(['error' => 'Kredit gagal diimport!']);
+            return redirect()->back()->with(['error' => 'Import kredit gagal diproses!']);
         }
     }
 
@@ -78,9 +78,9 @@ class ImportController extends Controller
         Excel::queueImport($import, $filePath);
 
         if ($import) {
-            return redirect()->back()->with(['success' => 'Tunggakan sedang diproses!']);
+            return redirect()->back()->with(['success' => 'Import tunggakan sedang diproses!']);
         } else {
-            return redirect()->back()->with(['error' => 'Tunggakan gagal diimport!']);
+            return redirect()->back()->with(['error' => 'Import tunggakan gagal diproses!']);
         }
     }
 
