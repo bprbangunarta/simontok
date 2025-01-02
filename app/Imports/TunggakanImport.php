@@ -33,6 +33,6 @@ class TunggakanImport implements ToCollection, WithHeadingRow, WithChunkReading,
 
     public function chunkSize(): int
     {
-        return 1000;
+        return 500;
     }
 }

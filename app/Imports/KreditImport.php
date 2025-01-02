@@ -49,6 +49,6 @@ class KreditImport implements ToCollection, WithHeadingRow, WithChunkReading, Sk
 
     public function chunkSize(): int
     {
-        return 1000;
+        return 500;
     }
 }
