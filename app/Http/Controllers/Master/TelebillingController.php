@@ -21,7 +21,7 @@ class TelebillingController extends Controller
     public function index()
     {
         $data = Kredit::with('tunggakan')
-            ->whereNotIn('produk_id', ['7', '10', '14'])
+            ->whereNotIn('produk_id', ['7', '10', '14', '16'])
             ->whereBetween('hari_tunggakan', [1, 30])
             ->orderBy('hari_tunggakan', 'asc');
 
